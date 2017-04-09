@@ -31,7 +31,7 @@ public class Empleado extends Trabajador {
 	 * @getSueldoFijo, devuelve el sueldo del empleado
 	 */
 
-	public double getSueldoFijo() {
+	public double getSueldoTotal() {
 
 		return sueldoFijo;
 	}

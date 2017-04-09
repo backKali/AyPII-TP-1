@@ -43,7 +43,7 @@ public class EmpleadoPorHoras extends Trabajador {
 		this.sueldoFijo = (this.montoPorHora * this.horasTrabajadas);
 	}
 	
-	public double getSueldoFijo() {
+	public double getSueldoTotal() {
 		
 		return this.sueldoFijo;
 	}

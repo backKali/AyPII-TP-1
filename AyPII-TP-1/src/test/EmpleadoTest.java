@@ -35,7 +35,7 @@ public class EmpleadoTest {
 		
 		
 			Empleado alfonzo = new Empleado(27853156, "Alfonzo", "27-27853156-6", 13500);
-			Assert.assertEquals(13500, alfonzo.getSueldoFijo(), 10);
+			Assert.assertEquals(13500, alfonzo.getSueldoTotal(), 10);
 			
 	}		
 	
