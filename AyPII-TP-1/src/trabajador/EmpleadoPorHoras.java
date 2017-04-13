@@ -2,24 +2,14 @@ package trabajador;
 
 import exceptions.NumeroNegativo;
 
-public class EmpleadoPorHoras extends Trabajador {
+public class EmpleadoPorHoras extends Remunerado {
 	
-	private int horasTrabajadas;
-	private double montoPorHora;
-	private double sueldoFijo;
+	protected int horasTrabajadas;
+	protected double montoPorHora;
 
 	public EmpleadoPorHoras(int dni, String nombre, String cuil, double montoPorHora) throws NumeroNegativo {
 		
 		super(dni, nombre, cuil);
-		try{
-			
-			this.montoPorHora = montoPorHora;
-		} catch (Exception NumeroNegativo) {
-			
-			if (montoPorHora >= 0) {
-				throw new NumeroNegativo("El monto ingresado es menor a cero, ingrese nuevamente el monto");
-			}	
-		}
 		
 	}
 
@@ -43,9 +33,5 @@ public class EmpleadoPorHoras extends Trabajador {
 		this.sueldoFijo = (this.montoPorHora * this.horasTrabajadas);
 	}
 	
-	public double getSueldoTotal() {
-		
-		return this.sueldoFijo;
-	}
 
 }

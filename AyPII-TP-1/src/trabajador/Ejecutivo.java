@@ -2,31 +2,17 @@ package trabajador;
 
 import exceptions.NumeroNegativo;
 
-public class Ejecutivo extends Trabajador {
+public class Ejecutivo extends Empleado {
 
 	private boolean premioOtorgado = false;
 	private double premioMonto;
-	private double sueldoFijo;
 	
 	public Ejecutivo(int dni, String nombre, String cuil, double sueldoFijo) throws NumeroNegativo {
 		
-		super(dni, nombre, cuil);
-		try {
-			
-			this.sueldoFijo = sueldoFijo;
-		} catch (Exception NumeroNegativo) {
-			
-			if(sueldoFijo <= 0) {
-				
-				throw new NumeroNegativo("El monto ingresado es menor a cero, ingrese nuevamente el monto");
-			}	
-		}
+		super(dni, nombre, cuil, sueldoFijo);
+		
 	}
 	
-	public double getSueldoFijo() {
-		
-		return this.sueldoFijo;
-	}
 	
 	public void otorgarPremio(double montoDelPremio) {
 		

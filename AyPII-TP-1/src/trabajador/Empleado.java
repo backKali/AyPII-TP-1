@@ -2,9 +2,8 @@ package trabajador;
 
 import exceptions.NumeroNegativo;
 
-public class Empleado extends Trabajador {
+public class Empleado extends Remunerado {
 
-	private double sueldoFijo;
 
 	/*
 	 * @param dni, dni del empleado
@@ -15,25 +14,7 @@ public class Empleado extends Trabajador {
 	
 	public Empleado(int dni, String nombre, String cuil, double sueldoFijo) throws NumeroNegativo {
 
-		super(dni, nombre, cuil);
-		try {
-			
-			this.sueldoFijo = sueldoFijo;			
-		} catch (Exception NumeroNegativo) {
-			
-			if (sueldoFijo >= 0) {
-				throw new NumeroNegativo("El monto ingresado es menor a cero, ingrese nuevamente el monto");
-			}
-		}
-	}
-	
-	/*
-	 * @getSueldoFijo, devuelve el sueldo del empleado
-	 */
-
-	public double getSueldoTotal() {
-
-		return sueldoFijo;
+		super(dni, nombre, cuil, sueldoFijo);
 	}
 
 }

@@ -4,9 +4,9 @@ import exceptions.NumeroNegativo;
 
 public class Trabajador {
 
-	private int dni;
-	private String nombre;
-	private String cuil;
+	protected int dni;
+	protected String nombre;
+	protected String cuil;
 
 	/*
 	 * @param dni, dni del trabajador
