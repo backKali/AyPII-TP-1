@@ -1,5 +1,7 @@
 package trabajador;
 
+import java.util.Scanner;
+
 public class Trabajador {
 
 	protected String dni;
@@ -28,10 +30,16 @@ public class Trabajador {
 				
 				this.cuil = cuil;				
 			} catch(Exception CuilDistintoDelDni) {
-				
+							
 				if(!(dni.equals(cuil.substring(3, 11)))) {
-					
+								
 					System.out.println("El cuil ingresado no se corresponde con el dni");
+					
+					@SuppressWarnings("resource")
+					Scanner s = new Scanner(System.in);
+					System.out.println("Ingrese el cuil");
+					
+					this.cuil = s.nextLine();
 				}
 			} 
 			
@@ -47,7 +55,7 @@ public class Trabajador {
 	}
 
 	/*
-	 * @getNombre devuelve el nombre y apellido del trabajador
+	 * @getNombre: devuelve el nombre y apellido del trabajador
 	 */
 	
 	public String getNombre() {
@@ -56,7 +64,7 @@ public class Trabajador {
 	}
 
 	/*
-	 * @getCuil devuelve el cuil del trabajador
+	 * @getCuil: devuelve el cuil del trabajador
 	 */
 	
 	public String getCuil() {

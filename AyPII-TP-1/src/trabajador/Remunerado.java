@@ -5,6 +5,13 @@ package trabajador;
 public class Remunerado extends Trabajador implements Comparable<Remunerado>{
 	
 	protected double sueldoFijo;
+	
+	/*
+	 * @param dni: dni del empleado
+	 * @param nombre: aprellido y nombre del empleado
+	 * @param cuil: el cuil del empleado
+	 * @param sueldoFijo: indica el sueldo del empleado
+	 */
 
 	public Remunerado(String dni, String nombre, String cuil, double sueldoFijo) {
 		
@@ -20,6 +27,12 @@ public class Remunerado extends Trabajador implements Comparable<Remunerado>{
 		
 	}
 	
+	/*
+	 * @param dni: dni del empleado
+	 * @param nombre: aprellido y nombre del empleado
+	 * @param cuil: el cuil del empleado
+	 */
+	
 	public Remunerado(String dni, String nombre, String cuil) {
 		
 		super(dni, nombre, cuil);
@@ -27,7 +40,7 @@ public class Remunerado extends Trabajador implements Comparable<Remunerado>{
 	}
 	
 	/*
-	 * @getSueldoFijo, devuelve el sueldo del empleado
+	 * @getSueldoFijo: devuelve el sueldo del empleado
 	 */
 
 	public double getSueldoTotal() {
@@ -35,10 +48,19 @@ public class Remunerado extends Trabajador implements Comparable<Remunerado>{
 		return sueldoFijo;
 	}
 	
+	/*
+	 * @toString: devuelve un String con la informacion del empleado
+	 */
+	
 	public String toString() {
 		
 		return "Nombre: "+this.getNombre() +"Cuil: "+this.getCuil()+ "Dni: "+this.getDni()+ "Sueldo: "+this.getSueldoTotal();
 	}
+	
+	/*
+	 * @compareTo: ordena los empleados por sueldo (de mayor a menor)
+	 * en caso de que existan dos con el mismo sueldo, los ordenado por dni
+	 */
 	
 	@Override
 	public int compareTo(Remunerado empleado) {

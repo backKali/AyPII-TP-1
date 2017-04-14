@@ -5,12 +5,17 @@ import exceptions.NumeroNegativo;
 public class EmpleadoPorHorasAComision extends EmpleadoPorHoras {
 
 	private double porcentajeDeComision;
-	public double getPorcentajeDeComision() {
-		return porcentajeDeComision;
-	}
-
 	private double totalDeVentas;
 
+	/*
+	 * @param dni: dni del empleado
+	 * @param nombre: aprellido y nombre del empleado
+	 * @param cuil: el cuil del empleado
+	 * @param sueldoFijo: indica el sueldo del empleado
+	 * @param montoPorHora: indica el monto que se le paga por hora
+	 * @param porcentajeDeComision: indica el porcentaje de la comision que recibe el empleado
+	 */
+	
 	public EmpleadoPorHorasAComision(String dni, String nombre, String cuil, double porcentajeDeComision,
 			double montoPorHora) {
 
@@ -26,10 +31,19 @@ public class EmpleadoPorHorasAComision extends EmpleadoPorHoras {
 		
 	}
 	
+	/*
+	 * @getTotalDeVentas: devuelve el total de ventas de un empleado
+	 */
+	
 	public double getTotalDeVentas() {
 		
 		return this.totalDeVentas;
 	}
+	
+	/*
+	 * @setTotalDeVentas: asigna el total de ventas de un empleado
+	 * @param totalDeVentas: indica el total de ventas de un empleado
+	 */
 	
 	public void setTotalDeVentas(int totalDeVentas) throws NumeroNegativo {
 		
@@ -45,12 +59,29 @@ public class EmpleadoPorHorasAComision extends EmpleadoPorHoras {
 		}
 	}
 	
-	
+	/*
+	 * @setSueldoFijo: asigna el sueldo de un empleado acorde al monto por hora,
+	 * la cantidad de horas trabajadas y le suma la comision que obtuvo por sus ventas
+	 */
 	
 	public void setSueldoFijo() {
 		
 		this.sueldoFijo = ((this.horasTrabajadas * this.montoPorHora) + (this.totalDeVentas * this.porcentajeDeComision /100));
 	}
+	
+	/*
+	 * @getPorcentajeDeComision: devuelve la comision 
+	 * que recibe un empleado por sus ventas
+	 */
+	
+	public double getPorcentajeDeComision() {
+		return porcentajeDeComision;
+	}
+	
+	/*
+	 * 
+	 * @toString: devuelve un String con la informacion del empleado
+	 */
 	
 	@Override
 	public String toString() {
