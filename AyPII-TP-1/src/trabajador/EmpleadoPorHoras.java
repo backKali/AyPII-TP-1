@@ -11,6 +11,14 @@ public class EmpleadoPorHoras extends Remunerado {
 		
 		super(dni, nombre, cuil);
 		
+		try {
+			
+			this.montoPorHora = montoPorHora;
+		} catch (Exception NumeroNegativo) {
+			
+			System.out.println("La cantidad de horas es negativa, vuelva a ingresar las horas");
+		}
+		
 	}
 
 	public int getHorasTrabajadas() {

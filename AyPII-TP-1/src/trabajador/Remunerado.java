@@ -10,6 +10,14 @@ public class Remunerado extends Trabajador implements Comparable<Remunerado>{
 		
 		super(dni, nombre, cuil);
 		
+		try {
+			
+			this.sueldoFijo = sueldoFijo;
+		} catch (Exception NumeroNegativo) {
+			
+			System.out.println("El sueldo ingresado es negativo, vuelva a ingresar el sueldo");
+		}
+		
 	}
 	
 	public Remunerado(String dni, String nombre, String cuil) {

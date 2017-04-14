@@ -16,6 +16,14 @@ public class EmpleadoPorHorasAComision extends EmpleadoPorHoras {
 
 		super(dni, nombre, cuil, montoPorHora);
 		
+		try {
+			
+			
+		} catch (Exception NumeroNegativo) {
+			
+			System.out.println("La comision ingresada es negativa, vuelva a ingresar la comision");
+		}
+		
 	}
 	
 	public double getTotalDeVentas() {
