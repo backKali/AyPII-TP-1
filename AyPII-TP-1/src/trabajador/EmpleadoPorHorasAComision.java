@@ -5,15 +5,23 @@ import exceptions.NumeroNegativo;
 public class EmpleadoPorHorasAComision extends EmpleadoPorHoras {
 
 	private double porcentajeDeComision;
+	public double getPorcentajeDeComision() {
+		return porcentajeDeComision;
+	}
+
 	private double totalDeVentas;
 
-	public EmpleadoPorHorasAComision(int dni, String nombre, String cuil, double porcentajeDeComision,
+	public EmpleadoPorHorasAComision(String dni, String nombre, String cuil, double porcentajeDeComision,
 			double montoPorHora) throws NumeroNegativo {
 
 		super(dni, nombre, cuil, montoPorHora);
 		
 	}
 	
+	public double getTotalDeVentas() {
+		
+		return this.totalDeVentas;
+	}
 	
 	public void setTotalDeVentas(int totalDeVentas) throws NumeroNegativo {
 		
@@ -29,19 +37,17 @@ public class EmpleadoPorHorasAComision extends EmpleadoPorHoras {
 		}
 	}
 	
-	public double getTotalDeVentas() {
-		
-		return this.totalDeVentas;
-	}
+	
 	
 	public void setSueldoFijo() {
 		
 		this.sueldoFijo = ((this.horasTrabajadas * this.montoPorHora) + (this.totalDeVentas * this.porcentajeDeComision /100));
 	}
-
-	public double getSueldoTotal() {
+	
+	@Override
+	public String toString() {
 		
-		return this.sueldoFijo;
+		return super.toString() +"Comision: "+this.getPorcentajeDeComision() +"Ventas: "+this.getTotalDeVentas();
 	}
-
+	
 }

@@ -12,9 +12,10 @@ public class Empleado extends Remunerado {
 	 * @param sueldoFijo, indica el sueldo del emplea
 	 */
 	
-	public Empleado(int dni, String nombre, String cuil, double sueldoFijo) throws NumeroNegativo {
+	public Empleado(String dni, String nombre, String cuil, double sueldoFijo) throws NumeroNegativo {
 
 		super(dni, nombre, cuil, sueldoFijo);
 	}
+	
 
 }

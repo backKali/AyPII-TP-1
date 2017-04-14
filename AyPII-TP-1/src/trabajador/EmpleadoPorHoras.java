@@ -7,7 +7,7 @@ public class EmpleadoPorHoras extends Remunerado {
 	protected int horasTrabajadas;
 	protected double montoPorHora;
 
-	public EmpleadoPorHoras(int dni, String nombre, String cuil, double montoPorHora) throws NumeroNegativo {
+	public EmpleadoPorHoras(String dni, String nombre, String cuil, double montoPorHora) throws NumeroNegativo {
 		
 		super(dni, nombre, cuil);
 		
@@ -31,6 +31,12 @@ public class EmpleadoPorHoras extends Remunerado {
 	public void setSueldoFijo() {
 		
 		this.sueldoFijo = (this.montoPorHora * this.horasTrabajadas);
+	}
+	
+	@Override
+	public String toString() {
+		
+		return super.toString()+ "Horas trabajadas: "+this.getHorasTrabajadas()+ "Monto por hora: "+this.getMontoPorHora();
 	}
 	
 

@@ -1,4 +1,5 @@
 package empresa;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Iterator;
 
@@ -7,6 +8,7 @@ import trabajador.*;
 public class Empresa {
 
 	private HashSet<Trabajador> empleados = new HashSet<Trabajador>();
+	private Trabajador[] arrayTemporal;
 	
 	public Empresa() {
 		
@@ -32,24 +34,22 @@ public class Empresa {
 	
 	public double calcularTotalAPagar() {
 		
+		double totalAPagar = 0;
+		
 		Iterator<Trabajador> itr = empleados.iterator();
 		while(itr.hasNext()) {
-			
-			
+			itr.next();
+					
 		}
 		
-		return 0;
+		return totalAPagar;
 	}
 	
 	public double calcularSueldoAPagarEmpleado(Trabajador empleado) {
 		
-		return 0;
+		return ((Remunerado) empleado).getSueldoTotal();
 	}
 	
-	public String toString(){
-		
-		return null;
-	}
 	
 	public static final void main (String[] args) {
 		
@@ -58,5 +58,16 @@ public class Empresa {
 	public void fileWritter(String file) {
 		
 	}
+	
+	private void hashToArray() {
+		
+		arrayTemporal = empleados.toArray(new Trabajador[empleados.size()]); 				
+	}
+	
+	private void sortArray() {
+		
+		Arrays.sort(arrayTemporal);
+	}
+
 
 }

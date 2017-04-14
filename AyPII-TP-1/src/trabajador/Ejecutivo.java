@@ -7,7 +7,7 @@ public class Ejecutivo extends Empleado {
 	private boolean premioOtorgado = false;
 	private double premioMonto;
 	
-	public Ejecutivo(int dni, String nombre, String cuil, double sueldoFijo) throws NumeroNegativo {
+	public Ejecutivo(String dni, String nombre, String cuil, double sueldoFijo) throws NumeroNegativo {
 		
 		super(dni, nombre, cuil, sueldoFijo);
 		
@@ -19,6 +19,7 @@ public class Ejecutivo extends Empleado {
 		if(premioOtorgado == false) {
 			
 			this.premioMonto = montoDelPremio;
+			this.sueldoFijo += this.premioMonto;
 			this.premioOtorgado = true;
 		}
 	}
@@ -28,9 +29,11 @@ public class Ejecutivo extends Empleado {
 		return this.premioMonto;
 	}
 	
-	public double getSueldoTotal() {
+	@Override
+	public String toString() {
 		
-		return (this.premioMonto + this.sueldoFijo);
+		return super.toString()+ "Monto del Premio: "+this.getPremioMonto();
 	}
+	
 
 }

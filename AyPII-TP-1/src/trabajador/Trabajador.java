@@ -1,42 +1,32 @@
 package trabajador;
 
-import exceptions.NumeroNegativo;
 
 public class Trabajador {
 
-	protected int dni;
+	protected String dni;
 	protected String nombre;
 	protected String cuil;
 
 	/*
 	 * @param dni, dni del trabajador
-	 * @param nombre, aprellido y nombre del trabajador
+	 * @param nombre, apellido y nombre del trabajador
 	 * @param cuil, el cuil del trabajador
 	 * 
 	 */
 	
-	public Trabajador(int dni, String nombre, String cuil) throws NumeroNegativo {
+	public Trabajador(String dni, String nombre, String cuil) {
 
-
-		try {
 			this.dni = dni;
 			this.nombre = nombre;
 			this.cuil = cuil;
 
-		} catch (Exception NumeroNegativo) {
-
-			if(dni <= 0) {
-				
-				throw new NumeroNegativo("El DNI ingresaso no es valido, inserte nuevamente el DNI");
-			}
-		}
 	}
 	
 	/*
 	 * @getDni devuelve el dni del trabajador
 	 */
 
-	public int getDni() {
+	public String getDni() {
 
 		return this.dni;
 	}
