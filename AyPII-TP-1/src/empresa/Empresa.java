@@ -8,7 +8,7 @@ import trabajador.*;
 public class Empresa {
 
 	private HashSet<Trabajador> empleados = new HashSet<Trabajador>();
-	private Trabajador[] arrayTemporal;
+	private Trabajador[] arrayDeEmpleados;
 	
 	public Empresa() {
 		
@@ -51,7 +51,7 @@ public class Empresa {
 	}
 	
 	
-	public static final void main (String[] args) {
+	public static void main (String[] args) {
 		
 	}
 	
@@ -61,12 +61,12 @@ public class Empresa {
 	
 	private void hashToArray() {
 		
-		arrayTemporal = empleados.toArray(new Trabajador[empleados.size()]); 				
+		arrayDeEmpleados = empleados.toArray(new Trabajador[empleados.size()]); 				
 	}
 	
 	private void sortArray() {
 		
-		Arrays.sort(arrayTemporal);
+		Arrays.sort(arrayDeEmpleados);
 	}
 
 
