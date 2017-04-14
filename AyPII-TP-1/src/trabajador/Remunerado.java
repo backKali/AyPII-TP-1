@@ -1,12 +1,12 @@
 package trabajador;
 
-import exceptions.NumeroNegativo;
+
 
 public class Remunerado extends Trabajador implements Comparable<Remunerado>{
 	
 	protected double sueldoFijo;
 
-	public Remunerado(String dni, String nombre, String cuil, double sueldoFijo) throws NumeroNegativo {
+	public Remunerado(String dni, String nombre, String cuil, double sueldoFijo) {
 		
 		super(dni, nombre, cuil);
 		

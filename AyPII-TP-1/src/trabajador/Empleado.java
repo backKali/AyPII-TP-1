@@ -1,7 +1,5 @@
 package trabajador;
 
-import exceptions.NumeroNegativo;
-
 public class Empleado extends Remunerado {
 
 
@@ -12,7 +10,7 @@ public class Empleado extends Remunerado {
 	 * @param sueldoFijo, indica el sueldo del emplea
 	 */
 	
-	public Empleado(String dni, String nombre, String cuil, double sueldoFijo) throws NumeroNegativo {
+	public Empleado(String dni, String nombre, String cuil, double sueldoFijo)  {
 
 		super(dni, nombre, cuil, sueldoFijo);
 	}

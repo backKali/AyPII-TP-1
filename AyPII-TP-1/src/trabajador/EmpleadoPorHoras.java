@@ -1,13 +1,13 @@
 package trabajador;
 
-import exceptions.NumeroNegativo;
+
 
 public class EmpleadoPorHoras extends Remunerado {
 	
 	protected int horasTrabajadas;
 	protected double montoPorHora;
 
-	public EmpleadoPorHoras(String dni, String nombre, String cuil, double montoPorHora) throws NumeroNegativo {
+	public EmpleadoPorHoras(String dni, String nombre, String cuil, double montoPorHora) {
 		
 		super(dni, nombre, cuil);
 		

@@ -1,13 +1,13 @@
 package trabajador;
 
-import exceptions.NumeroNegativo;
+
 
 public class Ejecutivo extends Empleado {
 
 	private boolean premioOtorgado = false;
 	private double premioMonto;
 	
-	public Ejecutivo(String dni, String nombre, String cuil, double sueldoFijo) throws NumeroNegativo {
+	public Ejecutivo(String dni, String nombre, String cuil, double sueldoFijo) {
 		
 		super(dni, nombre, cuil, sueldoFijo);
 		

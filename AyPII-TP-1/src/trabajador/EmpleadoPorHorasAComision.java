@@ -12,7 +12,7 @@ public class EmpleadoPorHorasAComision extends EmpleadoPorHoras {
 	private double totalDeVentas;
 
 	public EmpleadoPorHorasAComision(String dni, String nombre, String cuil, double porcentajeDeComision,
-			double montoPorHora) throws NumeroNegativo {
+			double montoPorHora) {
 
 		super(dni, nombre, cuil, montoPorHora);
 		
