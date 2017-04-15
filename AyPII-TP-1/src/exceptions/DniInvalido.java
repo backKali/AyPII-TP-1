@@ -1,9 +1,10 @@
 package exceptions;
 
-public class DniInvalido {
+public class DniInvalido extends Exception {
 
-	public DniInvalido() {
-		// TODO Auto-generated constructor stub
+	public DniInvalido (String mensaje) {
+		
+		super(mensaje);
 	}
 
 }
