@@ -20,18 +20,24 @@ public class Trabajador implements Comparable<Trabajador> {
 			this.nombre = nombre;
 		
 			try {
-				
-				this.dni = dni;
+				if (isNumber(dni)) {
+					
+					this.dni = dni;
+				}
 			} catch (Exception DniInvalido) {
 				
 			}
 			
 			try{
+				 //Hay que hacder test para ver si los numeros
+				 // donde se corata el string estan bien
+				if (isNumber(cuil.substring(0,1)) && isNumber(cuil.substring(3, 8)) && isNumber(cuil.substring(10, 10))) {
 				
-				this.cuil = cuil;				
+					this.cuil = cuil;	
+				}
 			} catch(Exception CuilDistintoDelDni) {
 							
-				if(!(dni.equals(cuil.substring(3, 11)))) {
+				if(!(dni.equals(cuil.substring(3, 8)))) {
 								
 					System.out.println("El cuil ingresado no se corresponde con el dni");
 					
@@ -44,6 +50,42 @@ public class Trabajador implements Comparable<Trabajador> {
 			} 
 			
 	}
+	
+	/*
+	 * @isNumber: verifica si el String esta formado por numeros
+	 * @param string: String a verificar
+	 */
+	
+	public static boolean isNumber(String string) {
+		
+		if(string == null || string.isEmpty()) {
+			
+			return false;
+		}
+		int i = 0;
+		if (string.charAt(0) == '-') {
+			
+			if(string.length() > 1) {
+				i++;
+			} else {
+				return false;
+			}
+		}
+		for (; i < string.length(); i++) {
+			
+			if(!Character.isDigit(string.charAt(i))) {
+				
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
+	
+	
+	
+	
 	
 	/*
 	 * @getDni: devuelve el dni del trabajador

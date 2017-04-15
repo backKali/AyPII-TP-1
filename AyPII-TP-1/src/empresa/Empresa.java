@@ -75,7 +75,7 @@ public class Empresa {
 	public void fileWritter(String file) throws IOException {
 
 		/*
-		 * Iterator<Trabajador> itr = empleados.iterator(); while(itr.hasNext())
+		 * Iterator<Trabajador> itr = sortedList.iterator(); while(itr.hasNext())
 		 * { itr.next(); }
 		 */
 
