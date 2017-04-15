@@ -2,7 +2,7 @@ package trabajador;
 
 
 
-public class Remunerado extends Trabajador implements Comparable<Remunerado>{
+public class Remunerado extends Trabajador {
 	
 	protected double sueldoFijo;
 	
@@ -62,7 +62,7 @@ public class Remunerado extends Trabajador implements Comparable<Remunerado>{
 	 * en caso de que existan dos con el mismo sueldo, los ordenado por dni
 	 */
 	
-	@Override
+	
 	public int compareTo(Remunerado empleado) {
 
 		if(this.sueldoFijo > empleado.sueldoFijo) {

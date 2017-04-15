@@ -2,13 +2,18 @@ package exceptions;
 
 public class CuilDistintoDelDni extends Exception {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -2893604326937044806L;
 
-	public CuilDistintoDelDni(String mensaje) {
+	/**
+	 *  Lo mismo que la otra Exception
+	 */
+	
+	private static final long serialVersionUID = -5742477799594386452L;
+
+	public CuilDistintoDelDni(String arg0) {
 		
-		super(mensaje);		
+		super(arg0);		
 	}
+
+	
+
 }

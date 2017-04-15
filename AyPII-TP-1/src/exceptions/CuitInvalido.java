@@ -1,8 +1,8 @@
 package exceptions;
 
-public class DniInvalido {
+public class CuitInvalido {
 
-	public DniInvalido() {
+	public CuitInvalido() {
 		// TODO Auto-generated constructor stub
 	}
 
