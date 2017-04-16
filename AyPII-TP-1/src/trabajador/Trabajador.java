@@ -29,8 +29,8 @@ public class Trabajador implements Comparable<Trabajador> {
 			}
 			
 			try{
-				 //Hay que hacder test para ver si los numeros
-				 // donde se corata el string estan bien
+				 //Hay que hacer test para ver si los numeros
+				 // donde se corta el string estan bien
 				if (isNumber(cuil.substring(0,1)) && isNumber(cuil.substring(3, 8)) && isNumber(cuil.substring(10, 10))) {
 				
 					this.cuil = cuil;	
