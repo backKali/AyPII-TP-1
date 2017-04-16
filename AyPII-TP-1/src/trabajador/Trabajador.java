@@ -114,6 +114,8 @@ public class Trabajador implements Comparable<Trabajador> {
 		return this.cuil;
 	}
 
+	//Hay que ver que onda este compareTo y el otro 
+	//que, creo que esta en Remunerado
 	@Override
 	public int compareTo(Trabajador o) {
 		
