@@ -2,7 +2,7 @@ package trabajador;
 
 
 
-public class EmpleadoPorHoras extends Remunerado {
+public class EmpleadoPorHoras extends Empleado {
 	
 	protected int horasTrabajadas;
 	protected double montoPorHora;
@@ -72,7 +72,7 @@ public class EmpleadoPorHoras extends Remunerado {
 	 * @toString: devuelve un String con la informacion del empleado
 	 */
 	
-	@Override
+
 	public String toString() {
 		
 		return super.toString()+ "Horas trabajadas: "+this.getHorasTrabajadas()+ "Monto por hora: "+this.getMontoPorHora();

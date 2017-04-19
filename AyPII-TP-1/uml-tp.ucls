@@ -4,7 +4,7 @@
   router="FAN">  
   <class id="1" language="java" name="trabajador.NoRemunerado" project="AyPII-TP-1" 
     file="/AyPII-TP-1/src/trabajador/NoRemunerado.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="238" y="323"/>    
+    <position height="-1" width="-1" x="153" y="276"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -13,7 +13,7 @@
   </class>  
   <class id="2" language="java" name="trabajador.Trabajador" project="AyPII-TP-1" 
     file="/AyPII-TP-1/src/trabajador/Trabajador.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="542" y="112"/>    
+    <position height="-1" width="-1" x="467" y="117"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -22,7 +22,7 @@
   </class>  
   <class id="3" language="java" name="trabajador.Ejecutivo" project="AyPII-TP-1" 
     file="/AyPII-TP-1/src/trabajador/Ejecutivo.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="516" y="740"/>    
+    <position height="-1" width="-1" x="480" y="709"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -31,7 +31,7 @@
   </class>  
   <class id="4" language="java" name="trabajador.Remunerado" project="AyPII-TP-1" 
     file="/AyPII-TP-1/src/trabajador/Remunerado.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="529" y="338"/>    
+    <position height="-1" width="-1" x="469" y="342"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -40,7 +40,7 @@
   </class>  
   <class id="5" language="java" name="trabajador.Voluntario" project="AyPII-TP-1" 
     file="/AyPII-TP-1/src/trabajador/Voluntario.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="136" y="439"/>    
+    <position height="-1" width="-1" x="104" y="380"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -49,7 +49,7 @@
   </class>  
   <class id="6" language="java" name="trabajador.EmpleadoPorHoras" project="AyPII-TP-1" 
     file="/AyPII-TP-1/src/trabajador/EmpleadoPorHoras.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="194" y="609"/>    
+    <position height="-1" width="-1" x="211" y="573"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -58,7 +58,7 @@
   </class>  
   <class id="7" language="java" name="trabajador.Empleado" project="AyPII-TP-1" 
     file="/AyPII-TP-1/src/trabajador/Empleado.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="507" y="536"/>    
+    <position height="-1" width="-1" x="473" y="534"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -67,7 +67,7 @@
   </class>  
   <class id="8" language="java" name="trabajador.EmpleadoPorHorasAComision" project="AyPII-TP-1" 
     file="/AyPII-TP-1/src/trabajador/EmpleadoPorHorasAComision.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="211" y="883"/>    
+    <position height="-1" width="-1" x="188" y="811"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -76,73 +76,57 @@
   </class>  
   <class id="9" language="java" name="empresa.Empresa" project="AyPII-TP-1" file="/AyPII-TP-1/src/empresa/Empresa.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="171" y="126"/>    
+    <position height="-1" width="-1" x="147" y="110"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <generalization id="10">    
-    <bendpoint x="508" y="650"/>    
-    <end type="SOURCE" refId="3"/>    
-    <end type="TARGET" refId="7"/>  
-  </generalization>  
-  <generalization id="11">    
-    <end type="SOURCE" refId="6"/>    
-    <end type="TARGET" refId="4"/>  
-  </generalization>  
-  <association id="12">    
-    <bendpoint x="309" y="80"/>    
-    <bendpoint x="327" y="80"/>    
-    <bendpoint x="374" y="80"/>    
-    <bendpoint x="446" y="80"/>    
+  <association id="10">    
     <end type="SOURCE" refId="9" navigable="false">      
-      <attribute id="13" name="empleados">        
-        <position height="18" width="60" x="391" y="58"/>      
-      </attribute>      
-      <multiplicity id="14" minimum="0" maximum="2147483647"/>    
+      <attribute id="11" name="sortedList"/>      
+      <multiplicity id="12" minimum="0" maximum="2147483647"/>    
     </end>    
     <end type="TARGET" refId="2" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <generalization id="15">    
-    <end type="SOURCE" refId="1"/>    
-    <end type="TARGET" refId="2"/>  
-  </generalization>  
-  <association id="16">    
-    <bendpoint x="309" y="140"/>    
-    <bendpoint x="452" y="140"/>    
-    <bendpoint x="454" y="137"/>    
-    <end type="SOURCE" refId="9" navigable="false">      
-      <attribute id="17" name="arrayDeEmpleados">        
-        <position height="18" width="99" x="353" y="116"/>      
-      </attribute>      
-      <multiplicity id="18" minimum="0" maximum="2147483647">        
-        <position height="16" width="21" x="426" y="146"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="2" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <generalization id="19">    
-    <bendpoint x="194" y="773"/>    
+  <generalization id="13">    
     <end type="SOURCE" refId="8"/>    
     <end type="TARGET" refId="6"/>  
   </generalization>  
-  <generalization id="20">    
-    <bendpoint x="543" y="251"/>    
+  <generalization id="14">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="1"/>  
+  </generalization>  
+  <association id="15">    
+    <end type="SOURCE" refId="9" navigable="false">      
+      <attribute id="16" name="empleados"/>      
+      <multiplicity id="17" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="2" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="18">    
+    <bendpoint x="299" y="275"/>    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="2"/>  
+  </generalization>  
+  <generalization id="19">    
     <end type="SOURCE" refId="4"/>    
     <end type="TARGET" refId="2"/>  
   </generalization>  
-  <generalization id="21">    
-    <bendpoint x="508" y="458"/>    
-    <end type="SOURCE" refId="7"/>    
+  <generalization id="20">    
+    <end type="SOURCE" refId="6"/>    
     <end type="TARGET" refId="4"/>  
   </generalization>  
+  <generalization id="21">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="7"/>  
+  </generalization>  
   <generalization id="22">    
-    <end type="SOURCE" refId="5"/>    
-    <end type="TARGET" refId="1"/>  
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="4"/>  
   </generalization>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
     sort-features="false" accessors="true" visibility="true">    

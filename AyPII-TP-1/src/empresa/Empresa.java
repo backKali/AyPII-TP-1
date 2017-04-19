@@ -54,7 +54,7 @@ public class Empresa {
 
 	public double calcularSueldoAPagarEmpleado(Trabajador empleado) {
 
-		return ((Remunerado) empleado).getSueldoTotal();
+		return ((Empleado) empleado).getSueldoTotal();
 	}
 
 	/*

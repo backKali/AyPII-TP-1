@@ -113,9 +113,16 @@ public class Trabajador implements Comparable<Trabajador> {
 
 		return this.cuil;
 	}
+	
+	/*
+	 * @toString: devuelve un String con la informacion del empleado
+	 */
+	
+	public String toString() {
+		
+		return "Nombre: "+this.getNombre() +"Cuil: "+this.getCuil()+ "Dni: "+this.getDni();
+	}
 
-	//Hay que ver que onda este compareTo y el otro 
-	//que, creo que esta en Remunerado
 	@Override
 	public int compareTo(Trabajador o) {
 		

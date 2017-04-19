@@ -83,7 +83,7 @@ public class EmpleadoPorHorasAComision extends EmpleadoPorHoras {
 	 * @toString: devuelve un String con la informacion del empleado
 	 */
 	
-	@Override
+
 	public String toString() {
 		
 		return super.toString() +"Comision: "+this.getPorcentajeDeComision() +"Ventas: "+this.getTotalDeVentas();

@@ -2,7 +2,7 @@ package trabajador;
 
 
 
-public class Voluntario extends NoRemunerado {
+public class Voluntario extends Trabajador {
 	
 	/*
 	 * @param dni: dni del empleado
