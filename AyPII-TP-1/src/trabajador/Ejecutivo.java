@@ -32,7 +32,7 @@ public class Ejecutivo extends Empleado {
 		 * Uno que se fije si alguna vez se entregó el premio (premioOtorgado) y
 		 * otro que haga un seguimiento de la entrega (otorgarPremio)
 		 */
-		if(premioOtorgado == false) {
+		if(!premioOtorgado) {
 			
 			this.premioMonto = montoDelPremio;
 			
