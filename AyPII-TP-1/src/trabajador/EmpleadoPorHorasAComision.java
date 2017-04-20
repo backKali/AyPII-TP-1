@@ -73,20 +73,17 @@ public class EmpleadoPorHorasAComision extends EmpleadoPorHoras {
 	 * @getPorcentajeDeComision: devuelve la comision 
 	 * que recibe un empleado por sus ventas
 	 */
-	
 	public double getPorcentajeDeComision() {
 		return porcentajeDeComision;
 	}
-	
+
 	/*
 	 * 
 	 * @toString: devuelve un String con la informacion del empleado
 	 */
-	
-
 	public String toString() {
 		
-		return super.toString() +"Comision: "+this.getPorcentajeDeComision() +"Ventas: "+this.getTotalDeVentas();
+		return super.toString() +"\nComision: "+this.getPorcentajeDeComision() +"\nVentas: "+this.getTotalDeVentas();
 	}
 	
 }

@@ -75,7 +75,7 @@ public class EmpleadoPorHoras extends Empleado {
 
 	public String toString() {
 		
-		return super.toString()+ "Horas trabajadas: "+this.getHorasTrabajadas()+ "Monto por hora: "+this.getMontoPorHora();
+		return super.toString()+ "\nHoras trabajadas: "+this.getHorasTrabajadas()+ "\nMonto por hora: "+this.getMontoPorHora();
 	}
 	
 

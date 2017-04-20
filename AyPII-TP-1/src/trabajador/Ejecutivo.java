@@ -1,10 +1,9 @@
 package trabajador;
 
-
-
 public class Ejecutivo extends Empleado {
 
 	private boolean premioOtorgado = false;
+	private boolean otorgarPremio = false;
 	private double premioMonto;
 	
 	/*
@@ -26,14 +25,29 @@ public class Ejecutivo extends Empleado {
 	 * @param montoDelPremio: indica el monto del premio a otorgar
 	 */
 	
-	public void otorgarPremio(double montoDelPremio) {
+	public int otorgarPremio(double montoDelPremio) {
 		
+		/*
+		 * El premio debe ser otorgado una sola vez, por ende necesitamos dos flags:
+		 * Uno que se fije si alguna vez se entregó el premio (premioOtorgado) y
+		 * otro que haga un seguimiento de la entrega (otorgarPremio)
+		 */
 		if(premioOtorgado == false) {
 			
 			this.premioMonto = montoDelPremio;
-			this.sueldoFijo += this.premioMonto;
-			this.premioOtorgado = true;
+			
+			/*
+			 * Cambio el flag de premioOtorgado para que no vuelva a pasar
+			 * por este ciclo y tambien otorgarPremio (para que lo entregue esta vez),
+			 * Ejecutivo.getSueldoTotal se va encargar de cambiarlo nuevamente. 
+			 */
+			this.premioOtorgado = !this.premioOtorgado;
+			this.otorgarPremio = !this.otorgarPremio;
+			
 		}
+		
+		return 0;
+		
 	}
 	
 	/*
@@ -48,11 +62,33 @@ public class Ejecutivo extends Empleado {
 	/*
 	 * @toString: devuelve un String con la informacion del empleado
 	 */
-	
-	
+
 	public String toString() {
 		
-		return super.toString()+ "Monto del Premio: "+this.getPremioMonto();
+		//Chequea si el Ejecutivo ya recibió el premio 
+		String seEntregoPremio;
+		if (premioOtorgado){
+			seEntregoPremio = "Si";
+		} else {
+			seEntregoPremio = "No";
+		}
+		
+		return super.toString()+ "\nPremio entregado: " +seEntregoPremio + "\nMonto del Premio: " +this.getPremioMonto();
+	}
+	
+	public double getSueldoTotal(){
+		
+		/*
+		 * El premio debe ser entregado una sola vez
+		 */
+		double sueldo = super.getSueldoTotal();
+		if (otorgarPremio) {
+			sueldo += this.premioMonto;
+			otorgarPremio = !otorgarPremio;
+		}
+		
+		return sueldo;
+		
 	}
 	
 

@@ -1,0 +1,16 @@
+Nombre: Javier Lazzarino
+CUIL: null
+DNI: 31070401
+Sueldo: 0.0
+Horas trabajadas: 0
+Monto por hora: 250.0
+
+Nombre: Javier Lazzarino
+CUIL: null
+DNI: 31070401
+Sueldo: 0.0
+Horas trabajadas: 0
+Monto por hora: 250.0
+Comision: 0.0
+Ventas: 0.0
+

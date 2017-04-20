@@ -33,8 +33,10 @@ public class Trabajador implements Comparable<Trabajador> {
 				 // donde se corta el string estan bien
 				if (isNumber(cuil.substring(0,1)) && isNumber(cuil.substring(3, 8)) && isNumber(cuil.substring(10, 10))) {
 				
-					this.cuil = cuil;	
+					this.cuil = cuil;
+					
 				}
+				
 			} catch(Exception CuilDistintoDelDni) {
 							
 				if(!(dni.equals(cuil.substring(3, 8)))) {
@@ -120,7 +122,7 @@ public class Trabajador implements Comparable<Trabajador> {
 	
 	public String toString() {
 		
-		return "Nombre: "+this.getNombre() +"Cuil: "+this.getCuil()+ "Dni: "+this.getDni();
+		return "Nombre: "+this.getNombre() +"\nCUIL: "+this.getCuil()+ "\nDNI: "+this.getDni();
 	}
 
 	@Override
@@ -128,6 +130,5 @@ public class Trabajador implements Comparable<Trabajador> {
 		
 		return 0;				
 	}
-
 
 }

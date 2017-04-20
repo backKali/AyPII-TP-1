@@ -22,7 +22,6 @@ public class Empleado extends Trabajador {
 			
 			System.out.println("El sueldo ingresado es negativo, vuelva a ingresar el sueldo");
 		}
-		
 	}
 	
 	/*
@@ -52,7 +51,7 @@ public class Empleado extends Trabajador {
 	
 	public String toString() {
 		
-		return super.toString() + "Sueldo: "+this.getSueldoTotal();
+		return super.toString() + "\nSueldo: "+this.getSueldoTotal();
 	}
 	
 	/*
@@ -74,8 +73,4 @@ public class Empleado extends Trabajador {
 		return this.dni.compareTo(empleado.dni);
 	}
 	
-
-
-	
-
 }

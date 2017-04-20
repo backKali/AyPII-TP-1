@@ -54,7 +54,7 @@ public class Remunerado extends Trabajador {
 	
 	public String toString() {
 		
-		return "Nombre: "+this.getNombre() +"Cuil: "+this.getCuil()+ "Dni: "+this.getDni()+ "Sueldo: "+this.getSueldoTotal();
+		return "Nombre: "+this.getNombre() +"\nCUIL: "+this.getCuil()+ "\nDNI: "+this.getDni()+ "\nSueldo: "+this.getSueldoTotal();
 	}
 	
 	/*
