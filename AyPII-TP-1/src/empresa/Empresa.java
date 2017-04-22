@@ -11,7 +11,7 @@ import trabajador.*;
 public class Empresa {
 
 	private static HashSet<Trabajador> empleados = new HashSet<Trabajador>();
-	private static ArrayList<Trabajador> sortedList;
+	private static ArrayList<Trabajador> sortedList = new ArrayList<>();
 
 	public Empresa() {
 
@@ -27,7 +27,6 @@ public class Empresa {
 
 		if (!empleados.contains(empleado)) {
 			empleados.add(empleado);
-			
 		}
 	}
 
@@ -55,7 +54,7 @@ public class Empresa {
 
 	public double calcularSueldoAPagarEmpleado(Trabajador empleado) {
 
-		return empleado.getSueldoTotal();
+		return ((Empleado) empleado).getSueldoTotal();
 	}
 
 	/*
@@ -72,12 +71,16 @@ public class Empresa {
 	 */
 
 	// Hay que hacer tests de esto
-		
+	
 	public void fileWriter(String file) throws IOException {
 
 		/*
-		 * Iterator<Trabajador> itr = sortedList.iterator(); while(itr.hasNext())
-		 * { itr.next(); }
+		 * Iterator<Trabajador> itr = sortedList.iterator(); 
+		 * while(itr.hasNext()) {
+		 * 		
+		 * 		itr.next().toString();
+		 * }
+		 * 
 		 */
 		
 		//Creo el FileWriter
@@ -86,7 +89,7 @@ public class Empresa {
 		/*
 		 * Recorro el HashSet con todos los trabajadores (si hay
 		 * que hacerlo ordenado, podemos convertirlo en SortedList
-		 * con el mÃ©todo hashToArrayList
+		 * con el método hashToArrayList
 		 */
 		for (Trabajador trabajador : empleados) {
 
@@ -100,27 +103,6 @@ public class Empresa {
 
 	}
 	
-//	public void fileWritter(String file) throws IOException {
-//
-//		/*
-//		 * Iterator<Trabajador> itr = sortedList.iterator(); while(itr.hasNext())
-//		 * { itr.next(); }
-//		 */
-//
-//		FileWriter fichero = null;
-//		PrintWriter pw = null;
-//
-//		fichero = new FileWriter(file, true);
-//		pw = new PrintWriter(fichero);
-//
-//		for (Trabajador t : sortedList) {
-//
-//			pw.println(t.toString());
-//		}
-//
-//		pw.close();
-//
-//	}
 
 	/*
 	 * @hashToArray: convirte el HashSet en un ArrayList
@@ -129,14 +111,13 @@ public class Empresa {
 	public void hashToArrayList() {
 
 		sortedList = new ArrayList<Trabajador>(empleados);
-
+		sortArray();
 	}
 
 	/*
 	 * @sortArray: ordena el ArrayList acorde al compareTo de Remunerado
 	 */
 
-	@SuppressWarnings("unused")
 	private void sortArray() {
 
 		Collections.sort(sortedList);
