@@ -6,6 +6,8 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Iterator;
+
 import trabajador.*;
 
 public class Empresa {
@@ -74,14 +76,6 @@ public class Empresa {
 	
 	public void fileWriter(String file) throws IOException {
 
-		/*
-		 * Iterator<Trabajador> itr = sortedList.iterator(); 
-		 * while(itr.hasNext()) {
-		 * 		
-		 * 		itr.next().toString();
-		 * }
-		 * 
-		 */
 		
 		//Creo el FileWriter
 		FileWriter escritor = new FileWriter(file);
@@ -94,9 +88,18 @@ public class Empresa {
 		for (Trabajador trabajador : empleados) {
 
 			//Escribo los trabajadores en el archivo que se haya pasado
-			escritor.write(trabajador.toString()+"\n"+"\n");
-			
+			escritor.write(trabajador.toString()+"\n"+"\n");			
 		}
+
+//		HAY QUE PROBAR SI ESTO CON ESTO FUNCIONA
+//		SI FUNCIONA LO CAMBIAMOS POR EL for each		
+		
+//		Iterator<Trabajador> itr = sortedList.iterator(); 
+//		 	while(itr.hasNext()) {
+//		 		
+//		 		escritor.write(itr.next().toString());
+//		 }
+		
 
 		//Cierro el archivo
 		escritor.close();
