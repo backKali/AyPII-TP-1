@@ -4,5 +4,12 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/SWT"/>
+	<classpathentry kind="lib" path="/home/lazzarin/.p2/pool/plugins/org.eclipse.core.databinding_1.6.0.v20160412-0910.jar" sourcepath="/home/lazzarin/.p2/pool/plugins/org.eclipse.core.databinding_1.6.0.v20160412-0910.jar"/>
+	<classpathentry kind="lib" path="/home/lazzarin/.p2/pool/plugins/org.eclipse.core.databinding.beans_1.3.100.v20160509-1025.jar" sourcepath="/home/lazzarin/.p2/pool/plugins/org.eclipse.core.databinding.beans_1.3.100.v20160509-1025.jar"/>
+	<classpathentry kind="lib" path="/home/lazzarin/.p2/pool/plugins/org.eclipse.core.databinding.observable_1.6.0.v20160511-1747.jar" sourcepath="/home/lazzarin/.p2/pool/plugins/org.eclipse.core.databinding.observable_1.6.0.v20160511-1747.jar"/>
+	<classpathentry kind="lib" path="/home/lazzarin/.p2/pool/plugins/org.eclipse.core.databinding.property_1.6.0.v20160427-0852.jar" sourcepath="/home/lazzarin/.p2/pool/plugins/org.eclipse.core.databinding.property_1.6.0.v20160427-0852.jar"/>
+	<classpathentry kind="lib" path="/home/lazzarin/.p2/pool/plugins/org.eclipse.jface.databinding_1.8.1.v20161026-1531.jar" sourcepath="/home/lazzarin/.p2/pool/plugins/org.eclipse.jface.databinding_1.8.1.v20161026-1531.jar"/>
+	<classpathentry kind="lib" path="/home/lazzarin/.p2/pool/plugins/org.eclipse.equinox.common_3.8.0.v20160509-1230.jar" sourcepath="/home/lazzarin/.p2/pool/plugins/org.eclipse.equinox.common_3.8.0.v20160509-1230.jar"/>
+	<classpathentry kind="lib" path="/home/lazzarin/.p2/pool/plugins/com.ibm.icu_56.1.0.v201601250100.jar" sourcepath="/home/lazzarin/.p2/pool/plugins/com.ibm.icu_56.1.0.v201601250100.jar"/>
 	<classpathentry kind="output" path="AyPII-TP-1/bin"/>
 </classpath>

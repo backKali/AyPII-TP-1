@@ -8,15 +8,20 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
+
 import trabajador.*;
 
 public class Empresa {
 
 	private static HashSet<Trabajador> empleados = new HashSet<Trabajador>();
 	private static ArrayList<Trabajador> sortedList = new ArrayList<>();
-
+	
 	public Empresa() {
-
+		
 	}
 
 	/*
@@ -64,9 +69,17 @@ public class Empresa {
 	 */
 
 	public static void main(String[] args) {
+		
+			try {
+				EmpresaGUI window = new EmpresaGUI();
+				window.open();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 
-	}
-
+		
+		}
+		
 	/*
 	 * @fileWriter: crea un archivo con toda la informacion de los empleados que
 	 * posee la empresa
@@ -83,22 +96,25 @@ public class Empresa {
 		/*
 		 * Recorro el HashSet con todos los trabajadores (si hay
 		 * que hacerlo ordenado, podemos convertirlo en SortedList
-		 * con el método hashToArrayList
+		 * con el mï¿½todo hashToArrayList
 		 */
-		for (Trabajador trabajador : empleados) {
-
-			//Escribo los trabajadores en el archivo que se haya pasado
-			escritor.write(trabajador.toString()+"\n"+"\n");			
-		}
-
+//		for (Trabajador trabajador : empleados) {
+//
+//			//Escribo los trabajadores en el archivo que se haya pasado
+//			escritor.write(trabajador.toString()+"\n"+"\n");			
+//		}
+//
 //		HAY QUE PROBAR SI ESTO CON ESTO FUNCIONA
-//		SI FUNCIONA LO CAMBIAMOS POR EL for each		
+//		SI FUNCIONA LO CAMBIAMOS POR EL for each
 		
-//		Iterator<Trabajador> itr = sortedList.iterator(); 
-//		 	while(itr.hasNext()) {
-//		 		
-//		 		escritor.write(itr.next().toString());
-//		 }
+		//Convirtiendo el Hash a Array antes de iterarlo, goes like a punch ;)
+		hashToArrayList();
+		
+		Iterator<Trabajador> itr = sortedList.iterator(); 
+		 	while(itr.hasNext()) {
+		 		
+		 		escritor.write(itr.next().toString()+"\n"+"\n");
+		 }
 		
 
 		//Cierro el archivo
