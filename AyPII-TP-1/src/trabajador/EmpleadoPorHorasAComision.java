@@ -5,7 +5,8 @@ import exceptions.NumeroNegativo;
 public class EmpleadoPorHorasAComision extends EmpleadoPorHoras {
 
 	private double porcentajeDeComision;
-	private double totalDeVentas;
+	private int totalDeVentas;
+	
 
 	/*
 	 * @param dni: dni del empleado
@@ -28,6 +29,8 @@ public class EmpleadoPorHorasAComision extends EmpleadoPorHoras {
 		super(dni, nombre, cuil, montoPorHora);
 
 		try {
+			
+			this.porcentajeDeComision = porcentajeDeComision;
 
 		} catch (Exception NumeroNegativo) {
 
@@ -51,18 +54,22 @@ public class EmpleadoPorHorasAComision extends EmpleadoPorHoras {
 	 * @param totalDeVentas: indica el total de ventas de un empleado
 	 */
 
-	public void setTotalDeVentas(int totalDeVentas) throws NumeroNegativo {
+	public void setTotalDeVentas(int totalDeVentas) {
 
 		try {
+			
+			if (totalDeVentas < 0) {
+
+				throw new NumeroNegativo("El total de ventas ingresado es negativo, vuelva a ingresar el total de ventas");
+
+			}
 
 			this.totalDeVentas = totalDeVentas;
+
 		} catch (Exception NumeroNegativo) {
+			
+			System.out.println(NumeroNegativo);
 
-			if (totalDeVentas <= 0) {
-
-				throw new NumeroNegativo(
-						"El total de ventas ingresado es negativo, vuelva a ingresar el total de ventas");
-			}
 		}
 	}
 
@@ -76,6 +83,7 @@ public class EmpleadoPorHorasAComision extends EmpleadoPorHoras {
 
 		this.sueldoFijo = ((this.horasTrabajadas * this.montoPorHora)
 				+ (this.totalDeVentas * this.porcentajeDeComision / 100));
+		
 	}
 
 	/*

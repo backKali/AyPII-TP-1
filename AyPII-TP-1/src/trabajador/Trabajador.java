@@ -118,7 +118,7 @@ public class Trabajador implements Comparable<Trabajador> {
 
 	public String toString() {
 
-		return "Nombre: " + this.getNombre() + "\nCUIL: " + this.getCuil() + "\nDNI: " + this.getDni();
+		return "Nombre: " + this.getNombre() + "\nCUIL: " + this.getCuil() + "\nDNI: " + this.getDni() + "\nTipo de Empleado: " + this.getClass().getSimpleName() ;
 	}
 
 	@Override

@@ -2,16 +2,10 @@ package empresa;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
-
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
 
 import trabajador.*;
 
@@ -59,9 +53,10 @@ public class Empresa {
 	 * @param empleado: empleado al que se le va a pagar el sueldo
 	 */
 
-	public double calcularSueldoAPagarEmpleado(Trabajador empleado) {
+	public double calcularSueldoAPagarEmpleado(Empleado empleado) {
+		
+		return ((Empleado)empleado).getSueldoTotal();
 
-		return ((Empleado) empleado).getSueldoTotal();
 	}
 
 	/*
@@ -88,34 +83,18 @@ public class Empresa {
 	// Hay que hacer tests de esto
 	
 	public void fileWriter(String file) throws IOException {
-
+		//Convirtiendo el Hash a Array antes de iterarlo
+		hashToArrayList();
 		
 		//Creo el FileWriter
 		FileWriter escritor = new FileWriter(file);
-		
-		/*
-		 * Recorro el HashSet con todos los trabajadores (si hay
-		 * que hacerlo ordenado, podemos convertirlo en SortedList
-		 * con el m�todo hashToArrayList
-		 */
-//		for (Trabajador trabajador : empleados) {
-//
-//			//Escribo los trabajadores en el archivo que se haya pasado
-//			escritor.write(trabajador.toString()+"\n"+"\n");			
-//		}
-//
-//		HAY QUE PROBAR SI ESTO CON ESTO FUNCIONA
-//		SI FUNCIONA LO CAMBIAMOS POR EL for each
-		
-		//Convirtiendo el Hash a Array antes de iterarlo, goes like a punch ;)
-		hashToArrayList();
-		
-		Iterator<Trabajador> itr = sortedList.iterator(); 
-		 	while(itr.hasNext()) {
+
+		//Uso el iterador para recorrer el listado de Trabajadores
+		Iterator<Trabajador> iteradorTrabajadores = sortedList.iterator(); 
+		 	while(iteradorTrabajadores.hasNext()) {
 		 		
-		 		escritor.write(itr.next().toString()+"\n"+"\n");
+		 		escritor.write(iteradorTrabajadores.next().toString()+"\n"+"\n");
 		 }
-		
 
 		//Cierro el archivo
 		escritor.close();
@@ -127,7 +106,7 @@ public class Empresa {
 	 * @hashToArray: convirte el HashSet en un ArrayList
 	 */
 
-	public void hashToArrayList() {
+	private void hashToArrayList() {
 
 		sortedList = new ArrayList<Trabajador>(empleados);
 		sortArray();

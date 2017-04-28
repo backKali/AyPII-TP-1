@@ -33,7 +33,7 @@ public class Ejecutivo extends Empleado {
 
 		/*
 		 * El premio debe ser otorgado una sola vez, por ende necesitamos dos
-		 * flags: Uno que se fije si alguna vez se entregó el premio
+		 * flags: Uno que se fije si alguna vez se entregï¿½ el premio
 		 * (premioOtorgado) y otro que haga un seguimiento de la entrega
 		 * (otorgarPremio)
 		 */
@@ -69,7 +69,7 @@ public class Ejecutivo extends Empleado {
 
 	public String toString() {
 
-		// Chequea si el Ejecutivo ya recibió el premio
+		// Chequea si el Ejecutivo ya recibiï¿½ el premio
 		String seEntregoPremio;
 		if (premioOtorgado) {
 			seEntregoPremio = "Si";
@@ -85,6 +85,10 @@ public class Ejecutivo extends Empleado {
 	 * @getSueldoTotal(): devuelve el sueldo del ejecutivo
 	 */
 
+	public boolean getEstadoPremioAsignado(){
+		return this.premioOtorgado;
+	}
+	
 	public double getSueldoTotal() {
 
 		/*

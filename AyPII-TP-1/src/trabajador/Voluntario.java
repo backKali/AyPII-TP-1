@@ -14,5 +14,5 @@ public class Voluntario extends Trabajador {
 		
 		super(dni, nombre, cuil);
 	}
-
+	
 }

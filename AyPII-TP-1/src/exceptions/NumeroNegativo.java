@@ -16,6 +16,7 @@ public class NumeroNegativo extends Exception {
 	public NumeroNegativo(String e) {
 		
 		super(e);
+		
 	}
 
 }

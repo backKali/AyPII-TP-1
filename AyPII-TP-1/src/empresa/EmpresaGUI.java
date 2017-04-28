@@ -1,34 +1,45 @@
 package empresa;
 
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.wb.swt.SWTResourceManager;
+
+import trabajador.Empleado;
 
 public class EmpresaGUI {
 
-	protected Shell shell;
-	Button botonAgregar;
-	Button botonQuitar;
-	private Text text;
+	protected Shell shlEmpresa;
+	private Button botonAgregar;
+	private Button botonQuitar;
+	private Button checkAsignar;
+	private Label labelNombre;
+	private Label labelCuil; 
+	private Label labelSalarioHora;
+	private Label labelHorasTrabajadas;
+	private Label labelSueldo;
+	private Label labelMontoPremio;
+	private Label labelComision;
+	private Combo comboTipoTrabajador;
+	private Text textoNombre;
 	private Text textoDni;
-	private Text text_2;
-	private Text text_3;
-	private Text text_4;
-	private Text text_5;
-	private Text text_6;
+	private Text textoSalarioHora;
+	private Text textoCuil;
+	private Text textoHorasTrabajadas;
+	private Text textoSueldo;
+	private Text textoMontoPremio;
 	private Table table;
+	private Text textoComision;
 
 	/**
 	 * Open the window.
@@ -37,9 +48,9 @@ public class EmpresaGUI {
 	public void open() {
 		Display display = Display.getDefault();
 		createContents();
-		shell.open();
-		shell.layout();
-		while (!shell.isDisposed()) {
+		shlEmpresa.open();
+		shlEmpresa.layout();
+		while (!shlEmpresa.isDisposed()) {
 			if (!display.readAndDispatch()) {
 				display.sleep();
 			}
@@ -50,139 +61,294 @@ public class EmpresaGUI {
 	 * Create contents of the window.
 	 */
 	protected void createContents() {
-		shell = new Shell();
-		shell.setSize(450, 452);
-		shell.setText("SWT Application");
-		shell.setLayout(new GridLayout(2, false));
+		shlEmpresa = new Shell();
+		shlEmpresa.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
+		shlEmpresa.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_FOREGROUND));
+		shlEmpresa.setSize(826, 621);
+		shlEmpresa.setText("Empresa");
+		shlEmpresa.setLayout(new GridLayout(3, false));
 		
-		Label labelAccion = new Label(shell, SWT.NONE);
+		Label labelAccion = new Label(shlEmpresa, SWT.NONE);
+		labelAccion.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
+		labelAccion.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		labelAccion.setAlignment(SWT.RIGHT);
 		labelAccion.setText("Accion");
 		
-		Button radioAgregar = new Button(shell, SWT.RADIO);
+		Button radioAgregar = new Button(shlEmpresa, SWT.RADIO);
+		radioAgregar.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		radioAgregar.setText("Agregar");
+		radioAgregar.setSelection(true);
 		radioAgregar.addSelectionListener(
-			    new SelectionListener() {
+				new SelectionListener() {
 			        public void widgetDefaultSelected(SelectionEvent evento) {
 			        }
+			        
 			        public void widgetSelected(SelectionEvent evento) {
 		                boolean isSelected = ((Button)evento.getSource()).getSelection();
-		          if(isSelected){
-		        	  botonAgregar.setEnabled(true);
-		        	  botonQuitar.setEnabled(false);
-		          }
-		          }
+		                if(isSelected){
+		                	botonAgregar.setEnabled(true);
+		                	botonQuitar.setEnabled(false);
+		                }
 			        }
-			    );
-		new Label(shell, SWT.NONE);
+			    }
+		);
+		new Label(shlEmpresa, SWT.NONE);
+		new Label(shlEmpresa, SWT.NONE);
 		
-		Button radioQuitar = new Button(shell, SWT.RADIO);
+		Button radioQuitar = new Button(shlEmpresa, SWT.RADIO);
 		radioQuitar.setText("Quitar");
 		radioQuitar.addSelectionListener(
-			    new SelectionListener() {
-			        public void widgetDefaultSelected(SelectionEvent evento) {
+				new SelectionListener() {
+					public void widgetDefaultSelected(SelectionEvent evento) {
+
 			        }
-			        public void widgetSelected(SelectionEvent evento) {
-		                boolean isSelected = ((Button)evento.getSource()).getSelection();
-		          if(isSelected){
-		        	  botonAgregar.setEnabled(false);
-		        	  botonQuitar.setEnabled(true);
-		          }
-		          }
-			        }
-			    );		
-		Label labelDni = new Label(shell, SWT.NONE);
+					
+					public void widgetSelected(SelectionEvent evento) {
+						boolean isSelected = ((Button)evento.getSource()).getSelection();
+						if(isSelected){
+							botonAgregar.setEnabled(false);
+							botonQuitar.setEnabled(true);
+							comboTipoTrabajador.setEnabled(false);
+							textoNombre.setEnabled(false);
+							labelNombre.setForeground(SWTResourceManager.getColor(SWT.COLOR_GRAY));
+							textoCuil.setEnabled(false);
+							labelCuil.setForeground(SWTResourceManager.getColor(SWT.COLOR_GRAY));
+							textoSalarioHora.setEnabled(false);
+							labelSalarioHora.setForeground(SWTResourceManager.getColor(SWT.COLOR_GRAY));
+							textoHorasTrabajadas.setEnabled(false);
+							labelHorasTrabajadas.setForeground(SWTResourceManager.getColor(SWT.COLOR_GRAY));
+							textoSueldo.setEnabled(false);
+							labelSueldo.setForeground(SWTResourceManager.getColor(SWT.COLOR_GRAY));
+							textoComision.setEnabled(false);
+							labelComision.setForeground(SWTResourceManager.getColor(SWT.COLOR_GRAY));
+							textoMontoPremio.setEnabled(false);
+							labelMontoPremio.setForeground(SWTResourceManager.getColor(SWT.COLOR_GRAY));
+							checkAsignar.setEnabled(false);
+						}
+					}
+				}
+		);
+		new Label(shlEmpresa, SWT.NONE);
+		
+		Label labelTipoTrabajador = new Label(shlEmpresa, SWT.NONE);
+		labelTipoTrabajador.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		labelTipoTrabajador.setText("Tipo de Trabajador");
+		
+		comboTipoTrabajador = new Combo(shlEmpresa, SWT.READ_ONLY);
+		comboTipoTrabajador.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
+		comboTipoTrabajador.setBackground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
+		comboTipoTrabajador.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		comboTipoTrabajador.setItems(new String[] { "Ejecutivo", "Por horas", "Por horas a comisión", "Voluntario" });
+		comboTipoTrabajador.addSelectionListener(new SelectionListener(){
+			public void widgetDefaultSelected(SelectionEvent evento) {
+			}
+
+			public void widgetSelected(SelectionEvent evento) {
+				switch (comboTipoTrabajador.getText()) {
+					case "Ejecutivo":
+						textoSalarioHora.setEnabled(false);
+						labelSalarioHora.setForeground(SWTResourceManager.getColor(SWT.COLOR_GRAY));
+						textoHorasTrabajadas.setEnabled(false);
+						labelHorasTrabajadas.setForeground(SWTResourceManager.getColor(SWT.COLOR_GRAY));
+						textoSueldo.setEnabled(true);
+						labelSueldo.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
+						textoComision.setEnabled(false);
+						labelComision.setForeground(SWTResourceManager.getColor(SWT.COLOR_GRAY));
+						textoMontoPremio.setEnabled(true);
+						labelMontoPremio.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
+						checkAsignar.setEnabled(true);
+						break;
+						
+					case "Por horas":
+						textoSalarioHora.setEnabled(true);
+						labelSalarioHora.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
+						textoHorasTrabajadas.setEnabled(true);
+						labelHorasTrabajadas.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
+						textoSueldo.setEnabled(false);
+						labelSueldo.setForeground(SWTResourceManager.getColor(SWT.COLOR_GRAY));
+						textoComision.setEnabled(false);
+						labelComision.setForeground(SWTResourceManager.getColor(SWT.COLOR_GRAY));
+						textoMontoPremio.setEnabled(false);
+						labelMontoPremio.setForeground(SWTResourceManager.getColor(SWT.COLOR_GRAY));
+						checkAsignar.setEnabled(false);
+						break;
+						
+					case "Por horas a comisión":
+						textoSalarioHora.setEnabled(true);
+						labelSalarioHora.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
+						textoHorasTrabajadas.setEnabled(true);
+						labelHorasTrabajadas.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
+						textoSueldo.setEnabled(false);
+						labelSueldo.setForeground(SWTResourceManager.getColor(SWT.COLOR_GRAY));
+						textoComision.setEnabled(true);
+						labelComision.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
+						textoMontoPremio.setEnabled(false);
+						labelMontoPremio.setForeground(SWTResourceManager.getColor(SWT.COLOR_GRAY));
+						checkAsignar.setEnabled(false);
+						break;
+						
+					case "Voluntario":
+						textoSalarioHora.setEnabled(false);
+						labelSalarioHora.setForeground(SWTResourceManager.getColor(SWT.COLOR_GRAY));
+						textoHorasTrabajadas.setEnabled(false);
+						labelHorasTrabajadas.setForeground(SWTResourceManager.getColor(SWT.COLOR_GRAY));
+						textoSueldo.setEnabled(false);
+						labelSueldo.setForeground(SWTResourceManager.getColor(SWT.COLOR_GRAY));
+						textoComision.setEnabled(false);
+						labelComision.setForeground(SWTResourceManager.getColor(SWT.COLOR_GRAY));
+						textoMontoPremio.setEnabled(false);
+						labelMontoPremio.setForeground(SWTResourceManager.getColor(SWT.COLOR_GRAY));
+						checkAsignar.setEnabled(false);
+						break;
+						
+				}
+			}
+		});
+		new Label(shlEmpresa, SWT.NONE);
+		
+		Label labelDni = new Label(shlEmpresa, SWT.NONE);
 		labelDni.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		labelDni.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		labelDni.setText("DNI");
 		
-		textoDni = new Text(shell, SWT.BORDER);
+		textoDni = new Text(shlEmpresa, SWT.BORDER);
+		textoDni.setTextLimit(8);
+		textoDni.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
+		textoDni.setBackground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
 		textoDni.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		new Label(shlEmpresa, SWT.NONE);
 		
-		Label labelNombre = new Label(shell, SWT.NONE);
+		labelNombre = new Label(shlEmpresa, SWT.NONE);
 		labelNombre.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		labelNombre.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		labelNombre.setText("Nombre");
 		
-		text = new Text(shell, SWT.BORDER);
-		text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		textoNombre = new Text(shlEmpresa, SWT.BORDER);
+		textoNombre.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
+		textoNombre.setBackground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
+		textoNombre.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		new Label(shlEmpresa, SWT.NONE);
 		
-		Label labelCuil = new Label(shell, SWT.NONE);
+		labelCuil = new Label(shlEmpresa, SWT.NONE);
 		labelCuil.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		labelCuil.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		labelCuil.setText("CUIL");
 		
-		text_3 = new Text(shell, SWT.BORDER);
-		text_3.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		textoCuil = new Text(shlEmpresa, SWT.BORDER);
+		textoCuil.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
+		textoCuil.setBackground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
+		textoCuil.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		new Label(shlEmpresa, SWT.NONE);
 		
-		Label labelSueldo = new Label(shell, SWT.NONE);
+		labelSueldo = new Label(shlEmpresa, SWT.NONE);
 		labelSueldo.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		labelSueldo.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		labelSueldo.setText("Sueldo Fijo");
 		
-		text_5 = new Text(shell, SWT.BORDER);
-		text_5.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		textoSueldo = new Text(shlEmpresa, SWT.BORDER);
+		textoSueldo.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
+		textoSueldo.setBackground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
+		textoSueldo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		new Label(shlEmpresa, SWT.NONE);
 		
-		Label labelSalarioHora = new Label(shell, SWT.NONE);
+		labelSalarioHora = new Label(shlEmpresa, SWT.NONE);
 		labelSalarioHora.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		labelSalarioHora.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		labelSalarioHora.setText("Salario / Hora");
 		
-		text_2 = new Text(shell, SWT.BORDER);
-		text_2.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		textoSalarioHora = new Text(shlEmpresa, SWT.BORDER);
+		textoSalarioHora.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
+		textoSalarioHora.setBackground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
+		textoSalarioHora.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		new Label(shlEmpresa, SWT.NONE);
 		
-		Label labelHorasTrabajadas = new Label(shell, SWT.NONE);
+		labelComision = new Label(shlEmpresa, SWT.NONE);
+		labelComision.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		labelComision.setText("Comisión");
+		
+		textoComision = new Text(shlEmpresa, SWT.BORDER);
+		textoComision.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
+		textoComision.setBackground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
+		textoComision.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		new Label(shlEmpresa, SWT.NONE);
+		
+		labelHorasTrabajadas = new Label(shlEmpresa, SWT.NONE);
 		labelHorasTrabajadas.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		labelHorasTrabajadas.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		labelHorasTrabajadas.setText("Horas Trabajadas");
 		
-		text_4 = new Text(shell, SWT.BORDER);
-		text_4.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		textoHorasTrabajadas = new Text(shlEmpresa, SWT.BORDER);
+		textoHorasTrabajadas.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
+		textoHorasTrabajadas.setBackground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
+		textoHorasTrabajadas.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		new Label(shlEmpresa, SWT.NONE);
 		
-		Label premioEjecutivo = new Label(shell, SWT.NONE);
-		premioEjecutivo.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		premioEjecutivo.setText("Premio");
+		labelMontoPremio = new Label(shlEmpresa, SWT.NONE);
+		labelMontoPremio.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		labelMontoPremio.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
+		labelMontoPremio.setText("Monto del premio");
 		
-		text_6 = new Text(shell, SWT.BORDER);
-		text_6.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		textoMontoPremio = new Text(shlEmpresa, SWT.BORDER);
+		textoMontoPremio.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
+		textoMontoPremio.setBackground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
+		textoMontoPremio.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		botonAgregar = new Button(shell, SWT.NONE);
+		checkAsignar = new Button(shlEmpresa, SWT.CHECK);
+		checkAsignar.setText("Asignar");
+		
+		botonAgregar = new Button(shlEmpresa, SWT.NONE);
+		botonAgregar.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_FOREGROUND));
+		botonAgregar.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		botonAgregar.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		botonAgregar.setText("Agregar");
+		botonAgregar.setEnabled(true);
 		
-		Combo combo = new Combo(shell, SWT.NONE);
-		combo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		Button botonGenerarReporte = new Button(shlEmpresa, SWT.NONE);
+		botonGenerarReporte.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
+		botonGenerarReporte.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_FOREGROUND));
+		botonGenerarReporte.setText("Generar Reporte");
+		new Label(shlEmpresa, SWT.NONE);
 		
-		botonQuitar = new Button(shell, SWT.NONE);
+		botonQuitar = new Button(shlEmpresa, SWT.NONE);
+		botonQuitar.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
+		botonQuitar.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_FOREGROUND));
 		botonQuitar.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));
 		botonQuitar.setText(" Quitar  ");
+		botonQuitar.setEnabled(false);
 		
-		table = new Table(shell, SWT.BORDER | SWT.FULL_SELECTION);
+		table = new Table(shlEmpresa, SWT.BORDER | SWT.FULL_SELECTION);
 		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		table.setHeaderVisible(true);
 		table.setLinesVisible(true);
 		
-		TableColumn tblclmnNewColumn_6 = new TableColumn(table, SWT.NONE);
-		tblclmnNewColumn_6.setWidth(100);
-		tblclmnNewColumn_6.setText("New Column");
+		TableColumn columnaDni = new TableColumn(table, SWT.NONE);
+		columnaDni.setWidth(100);
+		columnaDni.setText("DNI");
 		
-		TableColumn tblclmnNewColumn_5 = new TableColumn(table, SWT.NONE);
-		tblclmnNewColumn_5.setWidth(100);
-		tblclmnNewColumn_5.setText("New Column");
+		TableColumn columnaNombre = new TableColumn(table, SWT.NONE);
+		columnaNombre.setWidth(100);
+		columnaNombre.setText("Nombre");
 		
-		TableColumn tblclmnNewColumn_4 = new TableColumn(table, SWT.NONE);
-		tblclmnNewColumn_4.setWidth(100);
-		tblclmnNewColumn_4.setText("New Column");
+		TableColumn columnaCuil = new TableColumn(table, SWT.NONE);
+		columnaCuil.setWidth(100);
+		columnaCuil.setText("CUIL");
 		
-		TableColumn tblclmnNewColumn_3 = new TableColumn(table, SWT.NONE);
-		tblclmnNewColumn_3.setWidth(100);
-		tblclmnNewColumn_3.setText("New Column");
+		TableColumn columnaSueldoFijo = new TableColumn(table, SWT.NONE);
+		columnaSueldoFijo.setWidth(100);
+		columnaSueldoFijo.setText("Sueldo Fijo");
 		
-		TableColumn tblclmnNewColumn_2 = new TableColumn(table, SWT.NONE);
-		tblclmnNewColumn_2.setWidth(100);
-		tblclmnNewColumn_2.setText("New Column");
+		TableColumn columnaSalarioHora = new TableColumn(table, SWT.NONE);
+		columnaSalarioHora.setWidth(100);
+		columnaSalarioHora.setText("Salario / Hora");
 		
-		TableColumn tblclmnNewColumn_1 = new TableColumn(table, SWT.NONE);
-		tblclmnNewColumn_1.setWidth(100);
-		tblclmnNewColumn_1.setText("New Column");
+		TableColumn columnaHorasTrabajadas = new TableColumn(table, SWT.NONE);
+		columnaHorasTrabajadas.setWidth(100);
+		columnaHorasTrabajadas.setText("Horas Trabajadas");
 		
-		TableColumn tblclmnNewColumn = new TableColumn(table, SWT.NONE);
-		tblclmnNewColumn.setWidth(100);
-		tblclmnNewColumn.setText("New Column");
+		TableColumn columnaPremio = new TableColumn(table, SWT.NONE);
+		columnaPremio.setWidth(100);
+		columnaPremio.setText("Monto del Premio");
+		new Label(shlEmpresa, SWT.NONE);
 
 	}
 
