@@ -44,7 +44,6 @@ public class Empresa {
 		}
 	}
 
-	// Hay que terminar de aca en adelante
 
 	/*
 	 * @calcularSueldoAPagarEmpleado: devuelve cuanto tiene que pagarle la
