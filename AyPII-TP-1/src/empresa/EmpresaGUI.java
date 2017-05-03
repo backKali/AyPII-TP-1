@@ -1,14 +1,20 @@
 package empresa;
 
+import trabajador.Trabajador;
+import trabajador.Voluntario;
+
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashSet;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
@@ -19,7 +25,15 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.wb.swt.SWTResourceManager;
 
+import exceptions.NumeroNegativo;
+import exceptions.SalarioInvalido;
+import exceptions.SeleccionarTrabajador;
+import exceptions.TrabajadorExistente;
 import trabajador.Ejecutivo;
+import trabajador.Empleado;
+import trabajador.EmpleadoPorHoras;
+import trabajador.EmpleadoPorHorasAComision;
+import empresa.Empresa;
 
 import org.eclipse.swt.widgets.TableItem;
 
@@ -46,17 +60,28 @@ public class EmpresaGUI {
 	private Text textoMontoPremio;
 	private Table tablaTrabajadores;
 	private Text textoComision;
+	private ArrayList<Trabajador> trabajadoresExistentes;
+	private HashSet<String> listadoDeDnisExistentes;
+	private TableItem itemTrabajador;
+	private Ejecutivo ejecutivo;
+	private Trabajador trabajador;
+	private Empleado empleado;
+	private EmpleadoPorHoras empleadoPorHoras;
+	private EmpleadoPorHorasAComision empleadoPorHorasAComision;
+	private Voluntario voluntario;
 	private Button botonContratar;
 	private Button botonDespedir;
 	private boolean checkAsignarSeleccionado;
 	private TableColumn columnaMontoDelPremio;
 	private TableColumn columnaTotalAPagar;
+	private TableColumn columnaComision;
 
 	/**
 	 * Open the window.
+	 * @throws TrabajadorExistente 
 	 * @wbp.parser.entryPoint
 	 */
-	public void open() {
+	public void open() throws TrabajadorExistente {
 		Display display = Display.getDefault();
 		createContents();
 		shlEmpresa.open();
@@ -71,13 +96,18 @@ public class EmpresaGUI {
 	/**
 	 * Create contents of the window.
 	 */
-	protected void createContents() {
+	protected void createContents() throws TrabajadorExistente{
 		shlEmpresa = new Shell();
 		shlEmpresa.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		shlEmpresa.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_FOREGROUND));
 		shlEmpresa.setSize(1180, 621);
 		shlEmpresa.setText("Empresa");
 		shlEmpresa.setLayout(new GridLayout(3, false));
+		
+		Empresa empresa = new Empresa();
+		
+		trabajadoresExistentes = new ArrayList<Trabajador>();
+		listadoDeDnisExistentes = new HashSet<String>();
 		
 		Label labelAccion = new Label(shlEmpresa, SWT.NONE);
 		labelAccion.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
@@ -149,7 +179,7 @@ public class EmpresaGUI {
 		comboTipoTrabajador.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		comboTipoTrabajador.setBackground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
 		comboTipoTrabajador.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		comboTipoTrabajador.setItems(new String[] { "Ejecutivo", "Por horas", "Por horas a comisión", "Voluntario" });
+		comboTipoTrabajador.setItems(new String[] { "Ejecutivo", "Por horas", "Por horas a comisión", "Voluntario", "Empleado" });
 		comboTipoTrabajador.addSelectionListener(new SelectionListener(){
 			public void widgetDefaultSelected(SelectionEvent evento) {
 			}
@@ -204,6 +234,19 @@ public class EmpresaGUI {
 						checkAsignar.setEnabled(false);
 						break;
 						
+					case "Empleado":
+						textoSalarioHora.setEnabled(false);
+						labelSalarioHora.setForeground(SWTResourceManager.getColor(SWT.COLOR_GRAY));
+						textoHorasTrabajadas.setEnabled(false);
+						labelHorasTrabajadas.setForeground(SWTResourceManager.getColor(SWT.COLOR_GRAY));
+						textoSueldo.setEnabled(true);
+						labelSueldo.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
+						textoComision.setEnabled(false);
+						labelComision.setForeground(SWTResourceManager.getColor(SWT.COLOR_GRAY));
+						checkAsignar.setEnabled(false);
+						break;
+
+						
 				}
 			}
 		});
@@ -215,7 +258,7 @@ public class EmpresaGUI {
 		labelDni.setText("DNI");
 		
 		textoDni = new Text(shlEmpresa, SWT.BORDER);
-		textoDni.setText("31070401");
+		textoDni.setText("");
 		textoDni.setTextLimit(8);
 		textoDni.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		textoDni.setBackground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
@@ -228,7 +271,7 @@ public class EmpresaGUI {
 		labelNombre.setText("Nombre");
 		
 		textoNombre = new Text(shlEmpresa, SWT.BORDER);
-		textoNombre.setText("Javier Lazzarino");
+		textoNombre.setText("");
 		textoNombre.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		textoNombre.setBackground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
 		textoNombre.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
@@ -240,7 +283,7 @@ public class EmpresaGUI {
 		labelCuil.setText("CUIL");
 		
 		textoCuil = new Text(shlEmpresa, SWT.BORDER);
-		textoCuil.setText("20-31070401-7");
+		textoCuil.setText("");
 		textoCuil.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		textoCuil.setBackground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
 		textoCuil.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
@@ -252,10 +295,10 @@ public class EmpresaGUI {
 		labelSueldo.setText("Sueldo Fijo");
 		
 		textoSueldo = new Text(shlEmpresa, SWT.BORDER);
-		textoSueldo.setText("35000.0");
 		textoSueldo.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		textoSueldo.setBackground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
 		textoSueldo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		textoSueldo.setEnabled(false);
 		new Label(shlEmpresa, SWT.NONE);
 		
 		labelSalarioHora = new Label(shlEmpresa, SWT.NONE);
@@ -264,9 +307,11 @@ public class EmpresaGUI {
 		labelSalarioHora.setText("Salario / Hora");
 		
 		textoSalarioHora = new Text(shlEmpresa, SWT.BORDER);
+		textoSalarioHora.setText("");
 		textoSalarioHora.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		textoSalarioHora.setBackground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
 		textoSalarioHora.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		textoSalarioHora.setEnabled(false);
 		new Label(shlEmpresa, SWT.NONE);
 		
 		labelComision = new Label(shlEmpresa, SWT.NONE);
@@ -277,6 +322,7 @@ public class EmpresaGUI {
 		textoComision.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		textoComision.setBackground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
 		textoComision.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		textoComision.setEnabled(false);
 		new Label(shlEmpresa, SWT.NONE);
 		
 		labelHorasTrabajadas = new Label(shlEmpresa, SWT.NONE);
@@ -285,9 +331,11 @@ public class EmpresaGUI {
 		labelHorasTrabajadas.setText("Horas Trabajadas");
 		
 		textoHorasTrabajadas = new Text(shlEmpresa, SWT.BORDER);
+		textoHorasTrabajadas.setText("");
 		textoHorasTrabajadas.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		textoHorasTrabajadas.setBackground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
 		textoHorasTrabajadas.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		textoHorasTrabajadas.setEnabled(false);
 		new Label(shlEmpresa, SWT.NONE);
 		
 		labelMontoPremio = new Label(shlEmpresa, SWT.NONE);
@@ -330,37 +378,287 @@ public class EmpresaGUI {
 		botonAgregar.setEnabled(true);
 		botonAgregar.addListener(SWT.Selection, new Listener(){
 			public void handleEvent(Event evento) {
+				boolean huboErrores = false;
 				switch (evento.type) {
 				case SWT.Selection:
 					switch (comboTipoTrabajador.getText()) {
 					case "Ejecutivo":
 						try{
-							Ejecutivo ejecutivo = new Ejecutivo(textoDni.getText(), textoNombre.getText(), textoCuil.getText(), Double.parseDouble(textoSueldo.getText()));
-							TableItem itemTrabajador = new TableItem(tablaTrabajadores, SWT.NONE);
+							//Me fijo si el Trabajador que intento crear ya existe
+							if (listadoDeDnisExistentes.contains(textoDni.getText())){
+								huboErrores = !huboErrores;
+								throw new TrabajadorExistente("El trabajador ingresado ya existe. Por favor, verifique su ingreso.");
+							}
+							//Intento crear el Objeto Ejecutivo
+							ejecutivo = new Ejecutivo(textoDni.getText(), textoNombre.getText(), textoCuil.getText(), Double.parseDouble(textoSueldo.getText()));
+							
+							//Si ejecutivo es un objeto que ya tenia en el HashSet, el de recien no se pudo crear
+							if (trabajadoresExistentes.contains(ejecutivo) && !huboErrores){
+								huboErrores = !huboErrores;
+								throw new TrabajadorExistente("El usuario no se pudo generar. Verifique su ingreso");
+							}
+							
+							//Me fijo si el Sueldo fijo ingresado es un numero
+							if (!isNumber(textoSueldo.getText()) && !huboErrores){
+								huboErrores = !huboErrores;
+								throw new SalarioInvalido("El Sueldo fijo ingresado no es un número. Verifíquelo");
+							}
+							
+							//En caso que se quiera pagar el premio, me fijo si se ingreso un numero							//
+							if (textoMontoPremio.getText() != null && checkAsignarSeleccionado){
+								if (!isNumber(textoMontoPremio.getText()) && !huboErrores){
+									huboErrores = !huboErrores;
+									throw new SalarioInvalido("El monto ingresado para el Premio es incorrecto. Verifiquelo por favor");
+								}
+							}
+						} catch (SalarioInvalido mensaje){
+							System.out.println(mensaje);
+						} catch (TrabajadorExistente mensaje) {
+							System.out.println(mensaje);
+						}
+						
+						/*
+						 * Acabamos de validar todos los campos para este tipo de usuario, a esta altura
+						 * todos los campos deberían esta bien
+						 */
+						if (!huboErrores){
+							//Agrego el usuario creado en un ArrayList para no perderlo en la proxima iteracion
+							trabajadoresExistentes.add(tablaTrabajadores.getItemCount(), ejecutivo);
+							
+							//Agrego el DNI al listado de DNIs para no volver a crearlo
+							listadoDeDnisExistentes.add(textoDni.getText());
+							
+							//Creo el TableItem
+							itemTrabajador = new TableItem(tablaTrabajadores, SWT.NONE);
 							itemTrabajador.setText(0, ejecutivo.getDni());
 							itemTrabajador.setText(1, ejecutivo.getNombre());
 							itemTrabajador.setText(2, ejecutivo.getCuil());
-							if (isNumber(textoSueldo.getText())){
-								itemTrabajador.setText(3, textoSueldo.getText());
-							}
-							if (textoMontoPremio.getText() != null && checkAsignarSeleccionado){
+							itemTrabajador.setText(3, String.valueOf(ejecutivo.getSueldoFijo()));
+							if (checkAsignarSeleccionado){
 								ejecutivo.otorgarPremio(Double.parseDouble(textoMontoPremio.getText()));
-								itemTrabajador.setText(6, textoMontoPremio.getText());
 							}
-
-						} catch (Exception mensaje){
-							System.out.println(mensaje);
+							itemTrabajador.setText(6, String.valueOf(ejecutivo.getPremioMonto()));
+							itemTrabajador.setText(8, String.valueOf(ejecutivo.getSueldoTotal()));
 						}
-						break;
+				break;
 						
 					case "Por horas":
-						break;
+						try{
+							//Me fijo si el Trabajador que intento crear ya existe
+							if (listadoDeDnisExistentes.contains(textoDni.getText())){
+								huboErrores = !huboErrores;
+								throw new TrabajadorExistente("El trabajador ingresado ya existe. Por favor, verifique su ingreso.");
+							}
+							
+							//Intento crear el Objeto Ejecutivo
+							empleadoPorHoras = new EmpleadoPorHoras(textoDni.getText(), textoNombre.getText(), textoCuil.getText(), Double.parseDouble(textoSalarioHora.getText()));
+							
+							//Si ejecutivo es un objeto que ya tenia en el HashSet, el de recien no se pudo crear
+							if (trabajadoresExistentes.contains(empleadoPorHoras) && !huboErrores){
+								huboErrores = !huboErrores;
+								throw new TrabajadorExistente("El usuario no se pudo generar. Verifique su ingreso");
+							}
+							
+							//Me fijo si el Sueldo fijo ingresado es un numero
+							if (!isNumber(textoSalarioHora.getText()) && !huboErrores){
+								huboErrores = !huboErrores;
+								throw new SalarioInvalido("El Salario / Hora ingresado no es un número. Verifíquelo");
+							}
+							
+							if (!isNumber(textoHorasTrabajadas.getText()) && !huboErrores){
+								huboErrores = !huboErrores;
+								throw new SalarioInvalido("Las Horas Trabajadas ingresadas no son un número. Verifíquelo");
+							}
+						} catch (SalarioInvalido mensaje){
+							System.out.println(mensaje);
+						} catch (TrabajadorExistente mensaje) {
+							System.out.println(mensaje);
+						} catch (NumeroNegativo mensaje){
+							System.out.println(mensaje);
+						}
 						
+						/*
+						 * Acabamos de validar todos los campos para este tipo de usuario, a esta altura
+						 * todos los campos deberían esta bien
+						 */
+						if (!huboErrores){
+							//Agrego el usuario creado en un ArrayList para no perderlo en la proxima iteracion
+							trabajadoresExistentes.add(tablaTrabajadores.getItemCount(), empleadoPorHoras);
+							
+							//Agrego el DNI al listado de DNIs para no volver a crearlo
+							listadoDeDnisExistentes.add(textoDni.getText());
+							
+							//Creo el TableItem
+							itemTrabajador = new TableItem(tablaTrabajadores, SWT.NONE);
+							itemTrabajador.setText(0, empleadoPorHoras.getDni());
+							itemTrabajador.setText(1, empleadoPorHoras.getNombre());
+							itemTrabajador.setText(2, empleadoPorHoras.getCuil());
+							itemTrabajador.setText(4, String.valueOf(empleadoPorHoras.getMontoPorHora()));
+							empleadoPorHoras.setHorasTrabajadas(Double.parseDouble(textoHorasTrabajadas.getText()));
+							itemTrabajador.setText(5, String.valueOf(empleadoPorHoras.getHorasTrabajadas()));
+							empleadoPorHoras.setSueldoFijo();
+							itemTrabajador.setText(8, String.valueOf(empleadoPorHoras.getSueldoTotal()));
+						}
+				break;
+				
 					case "Por horas a comisión":
-						break;
+						try{
+							//Me fijo si el Trabajador que intento crear ya existe
+							if (listadoDeDnisExistentes.contains(textoDni.getText())){
+								huboErrores = !huboErrores;
+								throw new TrabajadorExistente("El trabajador ingresado ya existe. Por favor, verifique su ingreso.");
+							}
+							
+							//Intento crear el Objeto Ejecutivo
+							empleadoPorHorasAComision = new EmpleadoPorHorasAComision(textoDni.getText(), textoNombre.getText(), textoCuil.getText(), Double.parseDouble(textoComision.getText()), Double.parseDouble(textoSalarioHora.getText()));
+							
+							//Si ejecutivo es un objeto que ya tenia en el HashSet, el de recien no se pudo crear
+							if (trabajadoresExistentes.contains(empleadoPorHorasAComision) && !huboErrores){
+								huboErrores = !huboErrores;
+								throw new TrabajadorExistente("El usuario no se pudo generar. Verifique su ingreso");
+							}
+							
+							//Me fijo si el Sueldo fijo ingresado es un numero
+							if (!isNumber(textoSalarioHora.getText()) && !huboErrores){
+								huboErrores = !huboErrores;
+								throw new SalarioInvalido("El Salario / Hora ingresado no es un número. Verifíquelo");
+							}
+							
+							if (!isNumber(textoHorasTrabajadas.getText()) && !huboErrores){
+								huboErrores = !huboErrores;
+								throw new SalarioInvalido("Las Horas Trabajadas ingresadas no son un número. Verifíquelo");
+							}
+							
+							if (!isNumber(textoComision.getText()) && !huboErrores){
+								huboErrores = !huboErrores;
+								throw new SalarioInvalido("La Comisión ingresada no es un número. Verifíquelo");
+							}
+							
+						} catch (SalarioInvalido mensaje){
+							System.out.println(mensaje);
+						} catch (TrabajadorExistente mensaje) {
+							System.out.println(mensaje);
+						} catch (NumeroNegativo mensaje){
+							System.out.println(mensaje);
+						}
 						
+						/*
+						 * Acabamos de validar todos los campos para este tipo de usuario, a esta altura
+						 * todos los campos deberían esta bien
+						 */
+						if (!huboErrores){
+							//Agrego el usuario creado en un ArrayList para no perderlo en la proxima iteracion
+							trabajadoresExistentes.add(tablaTrabajadores.getItemCount(), empleadoPorHorasAComision);
+							
+							//Agrego el DNI al listado de DNIs para no volver a crearlo
+							listadoDeDnisExistentes.add(textoDni.getText());
+							
+							//Creo el TableItem
+							itemTrabajador = new TableItem(tablaTrabajadores, SWT.NONE);
+							itemTrabajador.setText(0, empleadoPorHorasAComision.getDni());
+							itemTrabajador.setText(1, empleadoPorHorasAComision.getNombre());
+							itemTrabajador.setText(2, empleadoPorHorasAComision.getCuil());
+							itemTrabajador.setText(4, String.valueOf(empleadoPorHorasAComision.getMontoPorHora()));
+							empleadoPorHorasAComision.setHorasTrabajadas(Double.parseDouble(textoHorasTrabajadas.getText()));
+							itemTrabajador.setText(5, String.valueOf(empleadoPorHorasAComision.getHorasTrabajadas()));
+							itemTrabajador.setText(6, String.valueOf(empleadoPorHorasAComision.getPorcentajeDeComision()));
+							empleadoPorHorasAComision.setSueldoFijo();
+							itemTrabajador.setText(8, String.valueOf(empleadoPorHorasAComision.getSueldoTotal()));
+						}
+				break;
+				
 					case "Voluntario":
-						break;
+						try{
+							//Me fijo si el Trabajador que intento crear ya existe
+							if (listadoDeDnisExistentes.contains(textoDni.getText())){
+								huboErrores = !huboErrores;
+								throw new TrabajadorExistente("El trabajador ingresado ya existe. Por favor, verifique su ingreso.");
+							}
+							//Intento crear el Objeto Ejecutivo
+							voluntario = new Voluntario(textoDni.getText(), textoNombre.getText(), textoCuil.getText());
+							
+							//Si ejecutivo es un objeto que ya tenia en el HashSet, el de recien no se pudo crear
+							if (trabajadoresExistentes.contains(voluntario) && !huboErrores){
+								huboErrores = !huboErrores;
+								throw new TrabajadorExistente("El usuario no se pudo generar. Verifique su ingreso");
+							}
+						} catch (TrabajadorExistente mensaje) {
+							System.out.println(mensaje);
+						}
+						
+						/*
+						 * Acabamos de validar todos los campos para este tipo de usuario, a esta altura
+						 * todos los campos deberían esta bien
+						 */
+						if (!huboErrores){
+							//Agrego el usuario creado en un ArrayList para no perderlo en la proxima iteracion
+							trabajadoresExistentes.add(tablaTrabajadores.getItemCount(), voluntario);
+							
+							//Agrego el DNI al listado de DNIs para no volver a crearlo
+							listadoDeDnisExistentes.add(textoDni.getText());
+							
+							//Creo el TableItem
+							itemTrabajador = new TableItem(tablaTrabajadores, SWT.NONE);
+							itemTrabajador.setText(0, voluntario.getDni());
+							itemTrabajador.setText(1, voluntario.getNombre());
+							itemTrabajador.setText(2, voluntario.getCuil());
+						}
+				break;
+				
+					case "Empleado":
+						try{
+							//Me fijo si el Trabajador que intento crear ya existe
+							if (listadoDeDnisExistentes.contains(textoDni.getText())){
+								huboErrores = !huboErrores;
+								throw new TrabajadorExistente("El trabajador ingresado ya existe. Por favor, verifique su ingreso.");
+							}
+							//Intento crear el Objeto Ejecutivo
+							empleado = new Empleado(textoDni.getText(), textoNombre.getText(), textoCuil.getText(), Double.parseDouble(textoSueldo.getText()));
+							
+							//Si ejecutivo es un objeto que ya tenia en el HashSet, el de recien no se pudo crear
+							if (trabajadoresExistentes.contains(empleado) && !huboErrores){
+								huboErrores = !huboErrores;
+								throw new TrabajadorExistente("El usuario no se pudo generar. Verifique su ingreso");
+							}
+							
+							//Me fijo si el Sueldo fijo ingresado es un numero
+							if (!isNumber(textoSueldo.getText()) && !huboErrores){
+								huboErrores = !huboErrores;
+								throw new SalarioInvalido("El Sueldo fijo ingresado no es un número. Verifíquelo");
+							}
+							
+							//En caso que se quiera pagar el premio, me fijo si se ingreso un numero							//
+							if (textoMontoPremio.getText() != null && checkAsignarSeleccionado){
+								if (!isNumber(textoMontoPremio.getText()) && !huboErrores){
+									huboErrores = !huboErrores;
+									throw new SalarioInvalido("El monto ingresado para el Premio es incorrecto. Verifiquelo por favor");
+								}
+							}
+						} catch (SalarioInvalido mensaje){
+							System.out.println(mensaje);
+						} catch (TrabajadorExistente mensaje) {
+							System.out.println(mensaje);
+						}
+						
+						/*
+						 * Acabamos de validar todos los campos para este tipo de usuario, a esta altura
+						 * todos los campos deberían esta bien
+						 */
+						if (!huboErrores){
+							//Agrego el usuario creado en un ArrayList para no perderlo en la proxima iteracion
+							trabajadoresExistentes.add(tablaTrabajadores.getItemCount(), empleado);
+							
+							//Agrego el DNI al listado de DNIs para no volver a crearlo
+							listadoDeDnisExistentes.add(textoDni.getText());
+							
+							//Creo el TableItem
+							itemTrabajador = new TableItem(tablaTrabajadores, SWT.NONE);
+							itemTrabajador.setText(0, empleado.getDni());
+							itemTrabajador.setText(1, empleado.getNombre());
+							itemTrabajador.setText(2, empleado.getCuil());
+							itemTrabajador.setText(8, String.valueOf(empleado.getSueldoTotal()));
+						}
+				break;
 					}
 				}
 			}
@@ -370,11 +668,46 @@ public class EmpresaGUI {
 		botonGenerarReporte.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		botonGenerarReporte.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_FOREGROUND));
 		botonGenerarReporte.setText("Generar Reporte");
+		botonGenerarReporte.addListener(SWT.Selection, new Listener(){
+			public void handleEvent(Event evento) {
+				switch (evento.type) {
+				case SWT.Selection:
+					try{
+							empresa.fileWriter("./Reporte.txt");
+					} catch (IOException mensaje){
+						System.out.println(mensaje);
+					}
+				}
+			}
+		});
 		
 		botonContratar = new Button(shlEmpresa, SWT.NONE);
 		botonContratar.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_FOREGROUND));
 		botonContratar.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		botonContratar.setText("Contratar");
+		botonContratar.addListener(SWT.Selection, new Listener(){
+			public void handleEvent(Event evento) {
+				switch (evento.type) {
+				case SWT.Selection:
+					try{
+						if (tablaTrabajadores.getSelectionIndex() == -1){
+							throw new SeleccionarTrabajador("Seleccione un trabajador para ser contratado.");
+						} else if (itemTrabajador.getText(9) == "Si"){
+							throw new SeleccionarTrabajador("El trabajador ya está contratado");
+						} else {
+							trabajador = trabajadoresExistentes.get(tablaTrabajadores.getSelectionIndex());
+							empresa.contratarEmpleado(trabajador);
+							itemTrabajador.setText(9, "Si");
+						}
+					} catch (SeleccionarTrabajador mensaje){
+						System.out.println(mensaje);
+					} catch (IndexOutOfBoundsException mensaje){
+					}
+				}
+			}
+		});
+
+		
 		
 		botonQuitar = new Button(shlEmpresa, SWT.NONE);
 		botonQuitar.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
@@ -382,36 +715,44 @@ public class EmpresaGUI {
 		botonQuitar.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));
 		botonQuitar.setText(" Quitar  ");
 		botonQuitar.setEnabled(false);
+		botonQuitar.addListener(SWT.Selection, new Listener(){
+			public void handleEvent(Event evento) {
+				try{
+					botonEliminar();
+				} catch (SeleccionarTrabajador mensaje){
+					System.out.println(mensaje);
+				}
+				
+			}
+
+			private void botonEliminar() throws SeleccionarTrabajador{
+				if(tablaTrabajadores.getSelectionIndex() == -1){
+					throw new SeleccionarTrabajador("No hay ningún Trabajador seleccionado");
+				} else {
+					tablaTrabajadores.remove(tablaTrabajadores.getSelectionIndex());
+				}
+			}
+		});
+		
 		
 		tablaTrabajadores = new Table(shlEmpresa, SWT.BORDER | SWT.FULL_SELECTION);
 		tablaTrabajadores.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		tablaTrabajadores.setHeaderVisible(true);
 		tablaTrabajadores.setLinesVisible(true);
-		tablaTrabajadores.addListener(SWT.MouseDown, new Listener(){
+		tablaTrabajadores.addListener(SWT.Selection, new Listener(){
 			public void handleEvent(Event evento){
-				Point punto = new Point(evento.x, evento.y);
-				TableItem item = tablaTrabajadores.getItem(punto);
-				System.out.println(item);
-				if(item != null) {
-					for (int col = 0; col < tablaTrabajadores.getColumnCount(); col++) {
-						Rectangle rectangulo = item.getBounds(col);
-						if (rectangulo.contains(punto)) {
-							System.out.println("item clicked.");
-							System.out.println("column is " + col);
-						}
-					}
-				}
+				//devuelve el numero de linea seleccionada
+				System.out.println(tablaTrabajadores.getSelectionIndex());
+				System.out.println(itemTrabajador.getText());
+				//tablaTrabajadores.remove(tablaTrabajadores.getSelectionIndex());
+				System.out.println(tablaTrabajadores.getItem(tablaTrabajadores.getSelectionIndex()));
+				
 			}
 	    });
 		
 		TableColumn columnaDni = new TableColumn(tablaTrabajadores, SWT.NONE);
 		columnaDni.setWidth(95);
 		columnaDni.setText("DNI");
-//		columnaDni.addListener(SWT.Selection, new Listener() {
-//			public void handleEvent(Event event) {
-//				columnaDni.pack();
-//			}
-//		});
 		
 		TableColumn columnaNombre = new TableColumn(tablaTrabajadores, SWT.NONE);
 		columnaNombre.setWidth(255);
@@ -433,6 +774,10 @@ public class EmpresaGUI {
 		columnaHorasTrabajadas.setWidth(30);
 		columnaHorasTrabajadas.setText("Horas Trabajadas");
 		
+		columnaComision = new TableColumn(tablaTrabajadores, SWT.NONE);
+		columnaComision.setWidth(100);
+		columnaComision.setText("Comisión");
+		
 		columnaMontoDelPremio = new TableColumn(tablaTrabajadores, SWT.NONE);
 		columnaMontoDelPremio.setWidth(100);
 		columnaMontoDelPremio.setText("Monto del Premio");
@@ -450,33 +795,57 @@ public class EmpresaGUI {
 		botonDespedir.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_FOREGROUND));
 		botonDespedir.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
 		botonDespedir.setText("Despedir ");
+		botonDespedir.addListener(SWT.Selection, new Listener(){
+			public void handleEvent(Event evento) {
+				switch (evento.type) {
+				case SWT.Selection:
+					try{
+						if (tablaTrabajadores.getSelectionIndex() == -1){
+							throw new SeleccionarTrabajador("Seleccione un trabajador para ser contratado.");
+						} else if (itemTrabajador.getText(9) == "No"){
+							throw new SeleccionarTrabajador("El trabajador no está contratado");
+						} else {
+							trabajador = trabajadoresExistentes.get(tablaTrabajadores.getSelectionIndex());
+							empresa.despedirEmpleado(trabajador);
+							itemTrabajador.setText(9, "No");
+						}
+					} catch (SeleccionarTrabajador mensaje){
+						System.out.println(mensaje);
+					} catch (IndexOutOfBoundsException mensaje){
+					}
+
+				}
+			}
+		});
+
 
 	}
 	
-	public static boolean isNumber(String string) {
+	public static boolean isNumber(String textoIngresado) {
+		
+		boolean esNumero = true;
+		
+		if (textoIngresado == null || textoIngresado.isEmpty()) {
 
-		if (string == null || string.isEmpty()) {
-
-			return false;
+			esNumero = !esNumero;
 		}
 		int i = 0;
-		if (string.charAt(0) == '-') {
+		if (textoIngresado.charAt(0) == '-') {
 
-			if (string.length() > 1) {
+			if (textoIngresado.length() > 1) {
 				i++;
 			} else {
-				return false;
+				esNumero = !esNumero;
 			}
 		}
-		for (; i < string.length(); i++) {
+		for (; i < textoIngresado.length(); i++) {
 
-			if (!Character.isDigit(string.charAt(i)) && string.charAt(i) != '.') {
+			if (!Character.isDigit(textoIngresado.charAt(i)) && textoIngresado.charAt(i) != '.') {
 
-				return false;
-
+				esNumero = !esNumero;
 			}
 		}
 
-		return true;
+		return esNumero;
 	}
 }

@@ -1,8 +1,10 @@
 package trabajador;
 
+import exceptions.NumeroNegativo;
+
 public class EmpleadoPorHoras extends Empleado {
 
-	protected int horasTrabajadas;
+	protected double horasTrabajadas;
 	protected double montoPorHora;
 
 	/*
@@ -16,26 +18,33 @@ public class EmpleadoPorHoras extends Empleado {
 	 * 
 	 * @param montoPorHora: indica el monto que se le paga por hora
 	 */
-
-	public EmpleadoPorHoras(String dni, String nombre, String cuil, double montoPorHora) {
+	
+	public EmpleadoPorHoras(String dni, String nombre, String cuil, double montoPorHora) throws NumeroNegativo{
 
 		super(dni, nombre, cuil);
 
 		try {
+			
+			if (montoPorHora < 0){
+				throw new NumeroNegativo("La cantidad de horas es negativa, vuelva a ingresar las horas");
+			} else {
 
 			this.montoPorHora = montoPorHora;
-		} catch (Exception NumeroNegativo) {
+			}
+			
+		} catch (NumeroNegativo mensaje) {
 
-			System.out.println("La cantidad de horas es negativa, vuelva a ingresar las horas");
+			System.out.println(mensaje);
 		}
 
 	}
+
 
 	/*
 	 * post: devuelve la cantida de horas trabajadas
 	 */
 
-	public int getHorasTrabajadas() {
+	public double getHorasTrabajadas() {
 
 		return this.horasTrabajadas;
 	}
@@ -47,7 +56,7 @@ public class EmpleadoPorHoras extends Empleado {
 	 * trabajo
 	 */
 
-	public void setHorasTrabajadas(int horasTrabajadas) {
+	public void setHorasTrabajadas(double horasTrabajadas) {
 
 		this.horasTrabajadas = horasTrabajadas;
 	}

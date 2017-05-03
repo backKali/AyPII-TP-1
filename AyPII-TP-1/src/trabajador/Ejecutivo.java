@@ -103,5 +103,9 @@ public class Ejecutivo extends Empleado {
 
 		return sueldo;
 	}
+	
+	public double getSueldoFijo(){
+		return super.getSueldoTotal();
+	}
 
 }
