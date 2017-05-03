@@ -17,6 +17,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Table;
@@ -25,6 +26,9 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.wb.swt.SWTResourceManager;
 
+import exceptions.CuilDistintoDelDni;
+import exceptions.CuilInvalido;
+import exceptions.DniInvalido;
 import exceptions.NumeroNegativo;
 import exceptions.SalarioInvalido;
 import exceptions.SeleccionarTrabajador;
@@ -390,10 +394,25 @@ public class EmpresaGUI {
 								throw new TrabajadorExistente("El trabajador ingresado ya existe. Por favor, verifique su ingreso.");
 							}
 							//Intento crear el Objeto Ejecutivo
-							ejecutivo = new Ejecutivo(textoDni.getText(), textoNombre.getText(), textoCuil.getText(), Double.parseDouble(textoSueldo.getText()));
+							try{
+								ejecutivo = new Ejecutivo(textoDni.getText(), textoNombre.getText(), textoCuil.getText(), Double.parseDouble(textoSueldo.getText()));
+							} catch (NumeroNegativo mensaje){
+								huboErrores = !huboErrores;
+								mensajeDeError(mensaje.getMessage());
+							} catch (DniInvalido mensaje){
+								huboErrores = !huboErrores;
+								mensajeDeError(mensaje.getMessage());
+							} catch (CuilInvalido mensaje){
+								huboErrores = !huboErrores;
+								mensajeDeError(mensaje.getMessage());
+							} catch (CuilDistintoDelDni mensaje){
+								huboErrores = !huboErrores;
+								mensajeDeError(mensaje.getMessage());
+							} catch (IllegalArgumentException mensaje){
+							}
 							
-							//Si ejecutivo es un objeto que ya tenia en el HashSet, el de recien no se pudo crear
-							if (trabajadoresExistentes.contains(ejecutivo) && !huboErrores){
+							//Si ejecutivo es un objeto que ya tenia en el HashSet o esta vacio, el de recien no se pudo crear
+							if ((trabajadoresExistentes.contains(ejecutivo) || ejecutivo == null) && !huboErrores){
 								huboErrores = !huboErrores;
 								throw new TrabajadorExistente("El usuario no se pudo generar. Verifique su ingreso");
 							}
@@ -412,9 +431,9 @@ public class EmpresaGUI {
 								}
 							}
 						} catch (SalarioInvalido mensaje){
-							System.out.println(mensaje);
+							mensajeDeError(mensaje.getMessage());
 						} catch (TrabajadorExistente mensaje) {
-							System.out.println(mensaje);
+							mensajeDeError(mensaje.getMessage());
 						}
 						
 						/*
@@ -451,10 +470,21 @@ public class EmpresaGUI {
 							}
 							
 							//Intento crear el Objeto Ejecutivo
-							empleadoPorHoras = new EmpleadoPorHoras(textoDni.getText(), textoNombre.getText(), textoCuil.getText(), Double.parseDouble(textoSalarioHora.getText()));
+							try{
+								empleadoPorHoras = new EmpleadoPorHoras(textoDni.getText(), textoNombre.getText(), textoCuil.getText(), Double.parseDouble(textoSalarioHora.getText()));
+							} catch (NumeroNegativo mensaje){
+								mensajeDeError(mensaje.getMessage());
+							} catch (DniInvalido mensaje){
+								mensajeDeError(mensaje.getMessage());
+							} catch (CuilInvalido mensaje){
+								mensajeDeError(mensaje.getMessage());
+							} catch (CuilDistintoDelDni mensaje){
+								mensajeDeError(mensaje.getMessage());
+							} catch (IllegalArgumentException mensaje){
+							}
 							
 							//Si ejecutivo es un objeto que ya tenia en el HashSet, el de recien no se pudo crear
-							if (trabajadoresExistentes.contains(empleadoPorHoras) && !huboErrores){
+							if ((trabajadoresExistentes.contains(empleadoPorHoras) || empleadoPorHoras == null) && !huboErrores){
 								huboErrores = !huboErrores;
 								throw new TrabajadorExistente("El usuario no se pudo generar. Verifique su ingreso");
 							}
@@ -470,11 +500,9 @@ public class EmpresaGUI {
 								throw new SalarioInvalido("Las Horas Trabajadas ingresadas no son un número. Verifíquelo");
 							}
 						} catch (SalarioInvalido mensaje){
-							System.out.println(mensaje);
+							mensajeDeError(mensaje.getMessage());
 						} catch (TrabajadorExistente mensaje) {
-							System.out.println(mensaje);
-						} catch (NumeroNegativo mensaje){
-							System.out.println(mensaje);
+							mensajeDeError(mensaje.getMessage());
 						}
 						
 						/*
@@ -510,10 +538,22 @@ public class EmpresaGUI {
 							}
 							
 							//Intento crear el Objeto Ejecutivo
-							empleadoPorHorasAComision = new EmpleadoPorHorasAComision(textoDni.getText(), textoNombre.getText(), textoCuil.getText(), Double.parseDouble(textoComision.getText()), Double.parseDouble(textoSalarioHora.getText()));
+							try{
+								empleadoPorHorasAComision = new EmpleadoPorHorasAComision(textoDni.getText(), textoNombre.getText(), textoCuil.getText(), Double.parseDouble(textoComision.getText()), Double.parseDouble(textoSalarioHora.getText()));
+							} catch (NumeroNegativo mensaje){
+								mensajeDeError(mensaje.getMessage());
+							} catch (DniInvalido mensaje){
+								mensajeDeError(mensaje.getMessage());
+							} catch (CuilInvalido mensaje){
+								mensajeDeError(mensaje.getMessage());
+							} catch (CuilDistintoDelDni mensaje){
+								mensajeDeError(mensaje.getMessage());
+							} catch (IllegalArgumentException mensaje){
+							}
+
 							
 							//Si ejecutivo es un objeto que ya tenia en el HashSet, el de recien no se pudo crear
-							if (trabajadoresExistentes.contains(empleadoPorHorasAComision) && !huboErrores){
+							if ((trabajadoresExistentes.contains(empleadoPorHorasAComision) || empleadoPorHorasAComision == null) && !huboErrores){
 								huboErrores = !huboErrores;
 								throw new TrabajadorExistente("El usuario no se pudo generar. Verifique su ingreso");
 							}
@@ -535,11 +575,9 @@ public class EmpresaGUI {
 							}
 							
 						} catch (SalarioInvalido mensaje){
-							System.out.println(mensaje);
+							mensajeDeError(mensaje.getMessage());
 						} catch (TrabajadorExistente mensaje) {
-							System.out.println(mensaje);
-						} catch (NumeroNegativo mensaje){
-							System.out.println(mensaje);
+							mensajeDeError(mensaje.getMessage());
 						}
 						
 						/*
@@ -575,15 +613,24 @@ public class EmpresaGUI {
 								throw new TrabajadorExistente("El trabajador ingresado ya existe. Por favor, verifique su ingreso.");
 							}
 							//Intento crear el Objeto Ejecutivo
-							voluntario = new Voluntario(textoDni.getText(), textoNombre.getText(), textoCuil.getText());
+							try{
+								voluntario = new Voluntario(textoDni.getText(), textoNombre.getText(), textoCuil.getText());
+							} catch (DniInvalido mensaje){
+								mensajeDeError(mensaje.getMessage());
+							} catch (CuilInvalido mensaje){
+								mensajeDeError(mensaje.getMessage());
+							} catch (CuilDistintoDelDni mensaje){
+								mensajeDeError(mensaje.getMessage());
+							} catch (IllegalArgumentException mensaje){
+							}
 							
 							//Si ejecutivo es un objeto que ya tenia en el HashSet, el de recien no se pudo crear
-							if (trabajadoresExistentes.contains(voluntario) && !huboErrores){
+							if ((trabajadoresExistentes.contains(voluntario) || voluntario == null) && !huboErrores){
 								huboErrores = !huboErrores;
 								throw new TrabajadorExistente("El usuario no se pudo generar. Verifique su ingreso");
 							}
 						} catch (TrabajadorExistente mensaje) {
-							System.out.println(mensaje);
+							mensajeDeError(mensaje.getMessage());
 						}
 						
 						/*
@@ -612,11 +659,22 @@ public class EmpresaGUI {
 								huboErrores = !huboErrores;
 								throw new TrabajadorExistente("El trabajador ingresado ya existe. Por favor, verifique su ingreso.");
 							}
-							//Intento crear el Objeto Ejecutivo
-							empleado = new Empleado(textoDni.getText(), textoNombre.getText(), textoCuil.getText(), Double.parseDouble(textoSueldo.getText()));
+							
+							try{
+								empleado = new Empleado(textoDni.getText(), textoNombre.getText(), textoCuil.getText(), Double.parseDouble(textoSueldo.getText()));
+							} catch (NumeroNegativo mensaje){
+								mensajeDeError(mensaje.getMessage());
+							} catch (DniInvalido mensaje){
+								mensajeDeError(mensaje.getMessage());
+							} catch (CuilInvalido mensaje){
+								mensajeDeError(mensaje.getMessage());
+							} catch (CuilDistintoDelDni mensaje){
+								mensajeDeError(mensaje.getMessage());
+							} catch (IllegalArgumentException mensaje){
+							}
 							
 							//Si ejecutivo es un objeto que ya tenia en el HashSet, el de recien no se pudo crear
-							if (trabajadoresExistentes.contains(empleado) && !huboErrores){
+							if ((trabajadoresExistentes.contains(empleado) || empleado == null) && !huboErrores){
 								huboErrores = !huboErrores;
 								throw new TrabajadorExistente("El usuario no se pudo generar. Verifique su ingreso");
 							}
@@ -635,9 +693,9 @@ public class EmpresaGUI {
 								}
 							}
 						} catch (SalarioInvalido mensaje){
-							System.out.println(mensaje);
+							mensajeDeError(mensaje.getMessage());
 						} catch (TrabajadorExistente mensaje) {
-							System.out.println(mensaje);
+							mensajeDeError(mensaje.getMessage());
 						}
 						
 						/*
@@ -673,9 +731,12 @@ public class EmpresaGUI {
 				switch (evento.type) {
 				case SWT.Selection:
 					try{
-							empresa.fileWriter("./Reporte.txt");
+						empresa.fileWriter("./Reporte.txt");
+						MessageBox ventanaConfirmacion = new MessageBox(shlEmpresa, SWT.ICON_INFORMATION);
+						ventanaConfirmacion.setMessage("El Reporte se genero en " + System.getProperty("user.dir"));
+						ventanaConfirmacion.open();
 					} catch (IOException mensaje){
-						System.out.println(mensaje);
+						mensajeDeError(mensaje.getMessage());
 					}
 				}
 			}
@@ -700,13 +761,12 @@ public class EmpresaGUI {
 							itemTrabajador.setText(9, "Si");
 						}
 					} catch (SeleccionarTrabajador mensaje){
-						System.out.println(mensaje);
+						mensajeDeError(mensaje.getMessage());
 					} catch (IndexOutOfBoundsException mensaje){
 					}
 				}
 			}
 		});
-
 		
 		
 		botonQuitar = new Button(shlEmpresa, SWT.NONE);
@@ -720,7 +780,7 @@ public class EmpresaGUI {
 				try{
 					botonEliminar();
 				} catch (SeleccionarTrabajador mensaje){
-					System.out.println(mensaje);
+					mensajeDeError(mensaje.getMessage());
 				}
 				
 			}
@@ -739,16 +799,6 @@ public class EmpresaGUI {
 		tablaTrabajadores.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		tablaTrabajadores.setHeaderVisible(true);
 		tablaTrabajadores.setLinesVisible(true);
-		tablaTrabajadores.addListener(SWT.Selection, new Listener(){
-			public void handleEvent(Event evento){
-				//devuelve el numero de linea seleccionada
-				System.out.println(tablaTrabajadores.getSelectionIndex());
-				System.out.println(itemTrabajador.getText());
-				//tablaTrabajadores.remove(tablaTrabajadores.getSelectionIndex());
-				System.out.println(tablaTrabajadores.getItem(tablaTrabajadores.getSelectionIndex()));
-				
-			}
-	    });
 		
 		TableColumn columnaDni = new TableColumn(tablaTrabajadores, SWT.NONE);
 		columnaDni.setWidth(95);
@@ -810,7 +860,7 @@ public class EmpresaGUI {
 							itemTrabajador.setText(9, "No");
 						}
 					} catch (SeleccionarTrabajador mensaje){
-						System.out.println(mensaje);
+						mensajeDeError(mensaje.getMessage());
 					} catch (IndexOutOfBoundsException mensaje){
 					}
 
@@ -847,5 +897,11 @@ public class EmpresaGUI {
 		}
 
 		return esNumero;
+	}
+	
+	public void mensajeDeError(String mensaje){
+		MessageBox ventanaWarning = new MessageBox(shlEmpresa, SWT.ICON_WARNING);
+		ventanaWarning.setMessage(mensaje);
+		ventanaWarning.open();
 	}
 }

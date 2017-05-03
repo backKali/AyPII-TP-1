@@ -1,5 +1,10 @@
 package trabajador;
 
+import exceptions.CuilDistintoDelDni;
+import exceptions.CuilInvalido;
+import exceptions.DniInvalido;
+import exceptions.NumeroNegativo;
+
 public class Empleado extends Trabajador {
 
 	protected double sueldoFijo;
@@ -14,7 +19,7 @@ public class Empleado extends Trabajador {
 	 * @param sueldoFijo: indica el sueldo del emplea
 	 */
 
-	public Empleado(String dni, String nombre, String cuil, double sueldoFijo) {
+	public Empleado(String dni, String nombre, String cuil, double sueldoFijo) throws NumeroNegativo, DniInvalido, CuilInvalido, CuilDistintoDelDni{
 
 		super(dni, nombre, cuil);
 		try {
@@ -35,7 +40,7 @@ public class Empleado extends Trabajador {
 	 * @param cuil: el cuil del empleado
 	 */
 
-	public Empleado(String dni, String nombre, String cuil) {
+	public Empleado(String dni, String nombre, String cuil) throws DniInvalido, CuilInvalido, CuilDistintoDelDni{
 
 		super(dni, nombre, cuil);
 

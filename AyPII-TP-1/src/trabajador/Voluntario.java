@@ -1,6 +1,8 @@
 package trabajador;
 
-
+import exceptions.CuilDistintoDelDni;
+import exceptions.CuilInvalido;
+import exceptions.DniInvalido;
 
 public class Voluntario extends Trabajador {
 	
@@ -10,7 +12,7 @@ public class Voluntario extends Trabajador {
 	 * @param cuil: el cuil del empleado
 	 */
 
-	public Voluntario(String dni, String nombre, String cuil) {
+	public Voluntario(String dni, String nombre, String cuil) throws DniInvalido, CuilInvalido, CuilDistintoDelDni {
 		
 		super(dni, nombre, cuil);
 	}

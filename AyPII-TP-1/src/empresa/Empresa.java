@@ -44,7 +44,6 @@ public class Empresa {
 		}
 	}
 
-	// Hay que terminar de aca en adelante
 
 	/*
 	 * @calcularSueldoAPagarEmpleado: devuelve cuanto tiene que pagarle la
@@ -80,7 +79,6 @@ public class Empresa {
 	 * posee la empresa
 	 */
 
-	// Hay que hacer tests de esto
 	
 	public void fileWriter(String file) throws IOException {
 		//Convirtiendo el Hash a Array antes de iterarlo

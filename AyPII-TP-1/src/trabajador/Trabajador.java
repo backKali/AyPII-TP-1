@@ -21,85 +21,69 @@ public class Trabajador implements Comparable<Trabajador> {
 	 * 
 	 */
 
-	public Trabajador(String dni, String nombre, String cuil) {
+	public Trabajador(String dni, String nombre, String cuil) throws DniInvalido, CuilDistintoDelDni, CuilInvalido{
 
+		boolean huboErrores = false;
+		
 		this.nombre = nombre;
 
-		try {
+		if (!isNumber(dni) || (dni.length() < 7 || dni.length() > 8)) {
 			
-			if (!isNumber(dni)) {
-
-				throw new DniInvalido("El DNI ingresado no es un número");
+			huboErrores = !huboErrores;
+			throw new DniInvalido("El DNI ingresado no es válido");
 				
-			} else if (dni.length() == 7) {
+		} else if (dni.length() == 7) {
 				
-				dni = "0" + dni;
+			dni = "0" + dni;
 				
-			}
-			
-			this.dni = dni;
-			
-			
-		} catch (DniInvalido mensaje) {
-			
-			System.out.println(mensaje);
-
 		}
+			
+		this.dni = dni;
 
-		try {
-			
-			/*
-			 * Agrego verificacion por si solo se ingresaron numeros (sin los guiones)
-			 * ------------------------
-			 * Si son todos numeros y el length es 11, le agrego los guiones para
-			 * unificar y que quede mas prolijo
-			 */
-			
-			if (isNumber(cuil) && cuil.length() == 11){
-				System.out.println("Es Numero");
-				cuil = cuil.substring(0, 2) + "-" + cuil.substring(2,10) + "-" + cuil.substring(10,11);
-			}
-			
-			/*
-			 * Hay que hacer test para ver si los numeros
-			 * donde se corta el string estan bien
-			 * 
-			 * Actualizacion: Se hicieron tests durante ejecucion y cambiaron substrings
-			 */
-			
-			//Genero la variable local sonNumeros para evaluarla despues
+		/*
+		 * Agrego verificacion por si solo se ingresaron numeros (sin los guiones)
+		 * ------------------------
+		 * Si son todos numeros y el length es 11, le agrego los guiones para
+		 * unificar y que quede mas prolijo
+		 */
+		boolean cantidadCaracteresCuil = cuil.length() == 11 || cuil.length() == 13;
+		
+		if (!cantidadCaracteresCuil && !huboErrores){
+			huboErrores = !huboErrores;
+			throw new CuilInvalido("El CUIL ingresado no es valido");
+		}
+		
+		if (isNumber(cuil) && cuil.length() == 11 && !huboErrores){
+			cuil = cuil.substring(0, 2) + "-" + cuil.substring(2,10) + "-" + cuil.substring(10,11);
+		}
+		
+		if (!huboErrores){
+		
 			boolean sonNumeros = isNumber(cuil.substring(0, 2)) && isNumber(cuil.substring(3, 11)) && isNumber(cuil.substring(12, 13));
-			
+		
 			if (!sonNumeros) {
-
+				
+				huboErrores = !huboErrores;
 				throw new CuilInvalido("El CUIL ingresado no es valido");
 
-			} else if (!dni.equals(cuil.substring(3, 11))) {
-
-				throw new CuilDistintoDelDni("El CUIL ingresado no se corresponde con el DNI");
-			
 			}
-			
-			this.cuil = cuil;
-			
-		} catch (CuilInvalido mensaje) {
-
-			System.out.println(dni);
-			System.out.println(cuil.substring(3, 11));
-			
-			System.out.println(mensaje);
-
-			@SuppressWarnings("resource")
-			Scanner s = new Scanner(System.in);
-			System.out.println("Ingrese el cuil");
-
-			this.cuil = s.nextLine();
-			
-		} catch (CuilDistintoDelDni mensaje) {
-			
-			System.out.println(mensaje);
-			
 		}
+		
+		/*
+		 * Hay que hacer test para ver si los numeros
+		 * donde se corta el string estan bien
+		 * 
+		 * Actualizacion: Se hicieron tests durante ejecucion y cambiaron substrings
+		 */
+		
+		//Genero la variable local sonNumeros para evaluarla despues
+		if (!dni.equals(cuil.substring(3, 11)) && !huboErrores) {
+
+			throw new CuilDistintoDelDni("El CUIL ingresado no se corresponde con el DNI");
+		
+		}
+		
+		this.cuil = cuil;
 		
 	}
 

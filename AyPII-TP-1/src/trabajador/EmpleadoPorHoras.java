@@ -1,5 +1,8 @@
 package trabajador;
 
+import exceptions.CuilDistintoDelDni;
+import exceptions.CuilInvalido;
+import exceptions.DniInvalido;
 import exceptions.NumeroNegativo;
 
 public class EmpleadoPorHoras extends Empleado {
@@ -19,7 +22,7 @@ public class EmpleadoPorHoras extends Empleado {
 	 * @param montoPorHora: indica el monto que se le paga por hora
 	 */
 	
-	public EmpleadoPorHoras(String dni, String nombre, String cuil, double montoPorHora) throws NumeroNegativo{
+	public EmpleadoPorHoras(String dni, String nombre, String cuil, double montoPorHora) throws NumeroNegativo, DniInvalido, CuilInvalido, CuilDistintoDelDni{
 
 		super(dni, nombre, cuil);
 

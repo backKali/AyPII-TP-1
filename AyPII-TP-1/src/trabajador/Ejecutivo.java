@@ -1,5 +1,10 @@
 package trabajador;
 
+import exceptions.CuilDistintoDelDni;
+import exceptions.CuilInvalido;
+import exceptions.DniInvalido;
+import exceptions.NumeroNegativo;
+
 public class Ejecutivo extends Empleado {
 
 	private double premioMonto;
@@ -16,7 +21,7 @@ public class Ejecutivo extends Empleado {
 	 * @param sueldoFijo: indica el sueldo del empleado
 	 */
 
-	public Ejecutivo(String dni, String nombre, String cuil, double sueldoFijo) {
+	public Ejecutivo(String dni, String nombre, String cuil, double sueldoFijo) throws NumeroNegativo, DniInvalido, CuilInvalido, CuilDistintoDelDni {
 
 		super(dni, nombre, cuil, sueldoFijo);
 
